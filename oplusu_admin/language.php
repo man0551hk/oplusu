@@ -20,7 +20,7 @@ include("interface1.php");
             </thead>
 
                 <?php
-                print $langClass->GetLangSetting();
+                    print $langClass->GetLangSetting();
                 ?>
 
           </table>

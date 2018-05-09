@@ -1,8 +1,15 @@
 <?php
 class MetaTagClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
+
   function GetMetaTagSetting()
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -16,7 +23,7 @@ class MetaTagClass
         $resultRow .= '<tr><td>Keyword</td><td><input type = "text" name ="keyword'.$lang_id.'" class="form-control" value = "'.$row2["keyword"].'"/></td></tr>';
         $resultRow .= '<tr><td>Description</td><td><input type = "text" name ="description'.$lang_id.'"  class="form-control" value = "'.$row2["description"].'"/></td></tr>';
       }
-      if (mysql_num_rows($result2)==0)
+      if (mysqli_num_rows($result2)==0)
       {
         $resultRow .= '<tr><td><b>'.$display_name.'</b></td></tr>';
         $resultRow .= '<tr><td>Keyword</td><td><input type = "text" name ="keyword'.$lang_id.'" class="form-control"/></td></tr>';
@@ -29,10 +36,11 @@ class MetaTagClass
 
   function SaveMetaTag($keyword, $description, $lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $keyword = str_replace("'","\'", $keyword);
     $description = str_replace("'","\'", $description);
     $result = mysqli_query($link, "select * from meta_tag_setting where lang_id = '$lang_id'") or die (mysql_error());
-    if (mysql_num_rows($result)==0)
+    if (mysqli_num_rows($result)==0)
     {
       mysqli_query($link, "insert into meta_tag_setting (keyword, description, lang_id) values ('$keyword', '$description', '$lang_id')")  or die (mysql_error());
     }
@@ -44,6 +52,7 @@ class MetaTagClass
 
   function GetMetaTag($currLang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $keyword = '';
     $description = '';
     $result = mysqli_query($link, "select keyword, description from meta_tag_setting where lang_id = '$currLang_id'") or die (mysql_error());
@@ -57,6 +66,7 @@ class MetaTagClass
 
   function GetProjectTitle($currLang_id, $project_id)
   {
+    $link = $this->Connection->ConnectDB();
     $project_title = '';
     $result = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_id'") or die (mysql_error());
     if($row  = mysqli_fetch_array($result))
@@ -68,6 +78,7 @@ class MetaTagClass
 
   function GetNewsTitle($news_id)
   {
+    $link = $this->Connection->ConnectDB();
     $news_title = '';
     $result = mysqli_query($link, "select news_title from news where news_id = '$news_id'") or die (mysql_error());
     if($row  = mysqli_fetch_array($result))
@@ -79,6 +90,7 @@ class MetaTagClass
 
   function GetPageName($pageName, $lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $url = '';
     if (strpos($pageName, 'about.php') !== false) {
         $url = 'about.php';
@@ -107,5 +119,5 @@ class MetaTagClass
     return $name;
   }
 }
-$metaTagClass = new MetaTagClass();
+$metaTagClass = new MetaTagClass($connectionClass);
 ?>

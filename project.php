@@ -2,9 +2,9 @@
 include("interface1.php");
 
 ?>
-<link rel="stylesheet" href="/js/vendor/isotope/css/styles.css">
-<script src="/js/vendor/isotope/js/isotope.min.js"></script>
-<script src="/js/vendor/isotope/js/main.js"></script>
+<link rel="stylesheet" href="/color1/js/vendor/isotope/css/styles.css">
+<script src="/color1/js/vendor/isotope/js/isotope.min.js"></script>
+<script src="/color1/js/vendor/isotope/js/main.js"></script>
 <section class="filter-section">
     <div class="container">
         <div class="row">

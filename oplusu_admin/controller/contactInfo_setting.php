@@ -1,8 +1,15 @@
 <?php
 class ContactInfoClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
+
   function GetContactInfoSetting()
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
     $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysql_error());
@@ -25,7 +32,7 @@ class ContactInfoClass
 
   function SaveAddress()
   {
-
+    $link = $this->Connection->ConnectDB();
     $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysql_error());
     while($row = mysqli_fetch_array($result))
     {
@@ -37,12 +44,12 @@ class ContactInfoClass
           if(mysqli_fetch_array($checkIsExist) == false) // insert
           {
             $insertSql = mysqli_query($link, "insert into address (address, lang_id) values ('$address', $lang_id)") or die (mysql_error());
-            mysql_query($insertSql);
+            mysqli_query($insertSql);
           }
           else //update
           {
             $updateSql = mysqli_query($link, "update address set address = '$address' where lang_id = $lang_id") or die (mysql_error());
-            mysql_query($updateSql);
+            mysqli_query($updateSql);
           }
 
     }
@@ -50,14 +57,15 @@ class ContactInfoClass
 
   function SaveContactSetting($email, $phone, $email2, $lat, $lon)
   {
+    $link = $this->Connection->ConnectDB();
     $sql = "update contact set email = '$email', phone = '$phone', email2 = '$email2', lat = '$lat', lon = '$lon'";
-    mysql_query($sql) or die(mysql_error());
+    mysqli_query($link, $sql) or die(mysql_error());
     return $lon;
   }
 
   function GetContact($currLang_id)
   {
-
+    $link = $this->Connection->ConnectDB();
     $address = '';
     $email = '';
     $phone = '';
@@ -79,11 +87,9 @@ class ContactInfoClass
     }
     $contact =  array($address, $email, $phone, $email2, $lat, $lon);
 
-
-
     return $contact;
   }
 }
 
-$ContactInfoClass = new ContactInfoClass();
+$ContactInfoClass = new ContactInfoClass($connectionClass);
 ?>

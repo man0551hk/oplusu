@@ -1,13 +1,14 @@
 <?php
-include 'oplusu_admin/db.php';
-include 'oplusu_admin/include.php';
-include 'oplusu_admin/controller/lang_setting.inc';
-include 'oplusu_admin/controller/menu.inc';
-include 'oplusu_admin/controller/metaTag_setting.inc';
-include 'oplusu_admin/controller/social_setting.inc';
-include 'oplusu_admin/controller/gallery_category_setting.inc';
-include 'oplusu_admin/controller/gallery_setting.inc';
-$langClass = new LangClass();
+include '../oplusu_admin/db.php';
+include '../oplusu_admin/include.php';
+include '../oplusu_admin/controller/lang_setting.php';
+include '../oplusu_admin/controller/menu.php';
+include '../oplusu_admin/controller/metaTag_setting.php';
+include '../oplusu_admin/controller/social_setting.php';
+include '../oplusu_admin/controller/gallery_category_setting.php';
+include '../oplusu_admin/controller/gallery_setting.php';
+
+
 $currLang_id = $langClass->GetCookieLang();
 
 $subpage = $metaTagClass->GetPageName($_SERVER["REQUEST_URI"], $currLang_id);
@@ -36,7 +37,7 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="icon" type="image/png" href="/images/favicon.png">
-    <title><?php echo $project_title;?><?php echo $news_title;?><?php echo $subpage;?>BC&D International Limited</title>
+    <title><?php echo $project_title;?><?php echo $news_title;?><?php echo $subpage;?>O + U</title>
 
     <meta name="keywords" content="<?php echo $metaArray[0];?>">
     <meta name="description" content="<?php echo $project_title . $news_title . $metaArray[1]  ;?>">
@@ -44,42 +45,42 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-touch-carousel.min.css">
-    <link rel="stylesheet" href="/css/ionicons.min.css?v1">
-    <link rel="stylesheet" href="/css/animate.min.css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css?v1">
-    <link rel="stylesheet" href="/css/owl.theme.min.css?v1">
-    <link rel="stylesheet" href="/css/jquery.fancybox.min.css?v1">
-    <link rel="stylesheet" href="/css/Fade.min.css?v1">
-    <link rel="stylesheet" href="/css/main.min.css?v1">
-    <link rel="stylesheet" href="/css/responsive.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/color1/css/bootstrap-touch-carousel.min.css">
+    <link rel="stylesheet" href="/color1/css/ionicons.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/animate.min.css">
+    <link rel="stylesheet" href="/color1/css/owl.carousel.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/owl.theme.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/jquery.fancybox.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/Fade.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/main.min.css?v1">
+    <link rel="stylesheet" href="/color1/css/responsive.min.css?v1">
     <!--<link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/demo.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/slicebox.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/custom.css" />-->
 
-    <script src="/js/vendor/modernizr-2.6.2.min.js?v1"></script>
+    <script src="/color1/js/vendor/modernizr-2.6.2.min.js?v1"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/js/owl.carousel.min.js?v1"></script>
-    <script src="/js/bootstrap.min.js?v1"></script>
-    <script src="/js/bootstrap-touch-carousel.js?v1"></script>
-    <script src="/js/wow.min.js?v1"></script>
-    <script src="/js/slider.js?v1"></script>
-    <script src="/js/jquery.fancybox.js?v1"></script>
-    <script src="/js/main.js?v1"></script>
-    <script src="/js/function.js?v1" type="text/javascript"></script>
+    <script src="/color1/js/owl.carousel.min.js?v1"></script>
+    <script src="/color1/js/bootstrap.min.js?v1"></script>
+    <script src="/color1/js/bootstrap-touch-carousel.js?v1"></script>
+    <script src="/color1/js/wow.min.js?v1"></script>
+    <script src="/color1/js/slider.js?v1"></script>
+    <script src="/color1/js/jquery.fancybox.js?v1"></script>
+    <script src="/color1/js/main.js?v1"></script>
+    <script src="/color1/js/function.js?v1" type="text/javascript"></script>
     
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118966689-1"></script>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      ga('create', 'UA-92039009-1', 'auto');
-      ga('send', 'pageview');
-
+    gtag('config', 'UA-118966689-1');
     </script>
+
     <script type="text/javascript">
         (function () {
             var s = document.createElement('script');
@@ -106,7 +107,8 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
 
               <div class="navbar-brand">
                   <a href="/" >
-                      <img src="/images/logo.png" alt="BC & D Logo">
+                        <font style = "font-family:Century Gothic;">O+U</font>
+                      <!-- <img src="/images/logo.png" alt="O + U Logo"> -->
                   </a>
               </div>
           </div>

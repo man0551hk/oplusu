@@ -1,6 +1,6 @@
 <?php
-include("interface1.php");
-include 'oplusu_admin/controller/contactInfo_setting.inc';
+include 'interface1.php';
+include '../oplusu_admin/controller/contactInfo_setting.php';
 $contact = $ContactInfoClass->GetContact($currLang_id);
 $thislang = 'EN';
 if($currLang_id == 1)
@@ -54,7 +54,7 @@ else if($currLang_id == 5)
                   <div class="map wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".1s">
                       <div id = "map" width="100%" height="400" style="width:100%;height:400px;"></div>
 
-                      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnWScRzS7iusdNVPqzesqUm2PHrGIa1dI&callback=initMap&language=<?php echo $thislang;?>" async defer></script>
+                      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuXRgE86melyFGPQZ_OGoIf9javhhQMg4&callback=initMap&language=<?php echo $thislang;?>" async defer></script>
 
                   </div>
               </div>

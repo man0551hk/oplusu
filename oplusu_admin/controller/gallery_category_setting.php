@@ -1,8 +1,15 @@
 <?php
 class GalleryCategoryClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
+
   function GetGalleryCategorySetting()
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
     $result = mysqli_query($link, "select * from gallery_category") or die (mysql_error());
@@ -52,6 +59,7 @@ class GalleryCategoryClass
 
   function InsertCategory()
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "insert into gallery_category (create_date) values (NOW())") or die (mysql_error());
     $set_id = mysql_insert_id();
     return $set_id;
@@ -59,6 +67,7 @@ class GalleryCategoryClass
 
   function InsertGalleryCategory($category, $set_id, $lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "insert into gallery_category_setting (category, set_id, lang_id) values ('$category', '$set_id', '$lang_id')") or (mysql_error());
     $category_id = mysql_insert_id();
     return $category_id;
@@ -66,17 +75,20 @@ class GalleryCategoryClass
 
   function UpdateGalleryCategory($category, $category_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "update gallery_category_setting set category = '$category' where category_id = '$category_id'") or (mysql_error());
   }
 
   function DeleteGalleryCategory($set_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "delete from gallery_category where set_id = '$set_id'") or (mysql_error());
     mysqli_query($link, "delete from gallery_category_setting where set_id = '$set_id'") or (mysql_error());
   }
 
   function ReturnCategroyID()
   {
+    $link = $this->Connection->ConnectDB();
     $categoryIDArray = Array();
     $result = mysqli_query($link, "select category_id from gallery_category_setting") or die (mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -88,6 +100,7 @@ class GalleryCategoryClass
 
   function GalleryCategory($currLang_ID)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select * from gallery_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -99,6 +112,7 @@ class GalleryCategoryClass
 
   function ReturnCategroyDropDown($set_id)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select category_id, category, set_id from gallery_category_setting where lang_id = 1") or die (mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -117,5 +131,5 @@ class GalleryCategoryClass
 
 }
 
-$galleryCategoryClass = new GalleryCategoryClass();
+$galleryCategoryClass = new GalleryCategoryClass($connectionClass);
 ?>

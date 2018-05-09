@@ -1,6 +1,6 @@
 <?php
 include("interface1.php");
-include 'oplusu_admin/controller/news_setting.inc';
+include 'oplusu_admin/controller/news_setting.php';
 
 if(isset($_GET["news_id"]))
 {

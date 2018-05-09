@@ -1,9 +1,14 @@
 <?php
 class LangClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
   function GetLangSetting() {
-    $returnRow = '';
-    $result = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
+    $link = $this->Connection->ConnectDB();
+    $result = mysqli_query($link, "select * from lang_setting");
     while($row = mysqli_fetch_array($result))
     {
       $returnRow .= '<tr>';
@@ -24,17 +29,17 @@ class LangClass
     return $returnRow;
   }
 
-
-
   function SaveLang($lang_code, $display_name, $open, $lang_id )
   {
-      $sql = "update lang_setting set lang_code = '$lang_code', display_name = '$display_name', open = '$open' where lang_id = '$lang_id'";
-      $result = mysql_query($sql) or die(mysql_error());
-      return $open;
+    $link = $this->Connection->ConnectDB();
+    $sql = "update lang_setting set lang_code = '$lang_code', display_name = '$display_name', open = '$open' where lang_id = '$lang_id'";
+    $result = mysqli_query($link, $sql) or die(mysql_error());
+    return $open;
   }
 
   function GetCookieLang()
   {
+    $link = $this->Connection->ConnectDB();
     $lang_id = '';
     $lang_code = 'EN'; //default
     if(!isset($_COOKIE['lang'])) {
@@ -61,7 +66,7 @@ class LangClass
 
   function LangDropDown($lang_id)
   {
-
+    $link = $this->Connection->ConnectDB();
     $returnRow = '';
 
     $result = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
@@ -82,6 +87,7 @@ class LangClass
 
   function GetLangIDArray()
   {
+    $link = $this->Connection->ConnectDB();
     $langIDArray = Array();
     $result = mysqli_query($link, "select lang_id from lang_setting") or die (mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -93,6 +99,7 @@ class LangClass
 
   function GetLangCode($currLang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select lang_code from lang_setting where lang_id = '$currLang_id'") or die (mysql_error());
     if($row = mysqli_fetch_array($result))
@@ -103,5 +110,5 @@ class LangClass
   }
 }
 
-$langClass = new LangClass();
+$langClass = new LangClass($connectionClass);
 ?>

@@ -1,7 +1,7 @@
 <?php session_start();
 include 'db.php';
-include 'controller/lang_setting.inc';
-include 'controller/home_setting.inc';
+include 'controller/lang_setting.php';
+include 'controller/home_setting.php';
 include 'include.php';
 
 

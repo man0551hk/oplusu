@@ -1,8 +1,15 @@
 <?php
 class HomeClass
 {
+    private $Connection;
+    public function __construct($connectionClass)
+    {
+      $this->Connection = $connectionClass;
+    }
+
     function GetSliderImage()
     {
+      $link = $this->Connection->ConnectDB();
       $resultRow .= '<table data-toggle="table" id="table-style" data-row-style="rowStyle" class="table table-hover" id = "home_slider">';
         $resultRow .= '<thead>';
         $resultRow .= '<tr>';
@@ -13,8 +20,8 @@ class HomeClass
         $resultRow .= '</thead>';
 
       $resultRow .= '<tbody>';
-      $result = mysql_query('select * from photo_slider order by dorder');
-      $num_rows = mysql_num_rows ($result);
+      $result = mysqli_query($link, 'select * from photo_slider order by dorder');
+      $num_rows = mysqli_num_rows ($result);
       while($row = mysqli_fetch_array($result))
       {
         $resultRow .= '<tr id ="'.$row["photo_id"].'"><td><img src = "../'.$row["photo_path"].'" class = "img-responsive" alt = ""/></td>';
@@ -28,8 +35,9 @@ class HomeClass
 
     function GetSliderPhotoID()
     {
+      $link = $this->Connection->ConnectDB();
       $photo = 1;
-      $result = mysql_query('select max(photo_id) as photo_id from photo_slider') or die (mysql_error());
+      $result = mysqli_query($link, 'select max(photo_id) as photo_id from photo_slider') or die (mysql_error());
       $value = mysqli_fetch_object($result);
       $photo = $value->photo_id + 1;
       return $photo;
@@ -37,28 +45,30 @@ class HomeClass
 
     function SaveSliderPhoto($filePath)
     {
+      $link = $this->Connection->ConnectDB();
       $sql = "select max(dorder) as newOrder from photo_slider";
-      $result = mysql_query($sql);
+      $result = mysqli_query($link, $sql);
       $value = mysqli_fetch_object($result);
       $newOrder = $value->newOrder + 1;
 
       $sql = "insert into photo_slider (photo_path, dorder) values ('$filePath', '$newOrder')";
-      $result = mysql_query($sql) or die (mysql_error());
+      $result = mysqli_query($link, $sql) or die (mysql_error());
     }
 
     function DeleteSliderPhoto($photo_id)
     {
+      $link = $this->Connection->ConnectDB();
       $sql = "select photo_path from photo_slider where photo_id = '$photo_id'";
-      $result = mysql_query($sql) or die (mysql_error());
+      $result = mysqli_query($link, $sql) or die (mysql_error());
       $photo_path = mysqli_fetch_object($result)->photo_path;
 
       unlink("../" . $photo_path);
 
       $sql = "delete from photo_slider where photo_id = '$photo_id'";
-      mysql_query($sql) or die (mysql_error());
+      mysqli_query($link, $sql) or die (mysql_error());
 
       $sql = "select photo_id from photo_slider order by dorder";
-      $result = mysql_query($sql);
+      $result = mysqli_query($link, $sql);
       $i = 1;
       while($row = mysqli_fetch_array($result))
       {
@@ -70,10 +80,11 @@ class HomeClass
 
     function HomeGetSliderImage()
     {
+      $link = $this->Connection->ConnectDB();
       $indicators = '';
       $photos = '';
       $count = 0;
-      $result = mysql_query('select * from photo_slider order by dorder');
+      $result = mysqli_query($link, 'select * from photo_slider order by dorder');
       while($row = mysqli_fetch_array($result))
       {
         if($count == 0)
@@ -144,9 +155,10 @@ class HomeClass
 
     function SavePhotoOrder($photo_id, $dorder)
     {
+      $link = $this->Connection->ConnectDB();
       mysqli_query($link, "update photo_slider set dorder = '$dorder' where photo_id = '$photo_id'") or die (mysql_error());
     }
 }
 
-$homeClass = new HomeClass();
+$homeClass = new HomeClass($connectionClass);
 ?>

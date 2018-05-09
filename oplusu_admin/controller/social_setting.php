@@ -1,8 +1,15 @@
 <?php
 class socialClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
+
   function GetSocialSetting()
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select * from social_media") or die (mysql_error());
     $iconClassArray = $this->iconClass();
@@ -52,6 +59,7 @@ class socialClass
 
   function GetSocialSettingArray()
   {
+    $link = $this->Connection->ConnectDB();
     $socialIDArray = Array();
     $result = mysqli_query($link, "select id from social_media") or die (mysql_error());
 
@@ -65,16 +73,19 @@ class socialClass
 
   function SaveSocialMedia($id, $link, $icon_class)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "update social_media set link = '$link', icon_class = '$icon_class' where id = '$id'") or die (mysql_error());
   }
 
   function InsertSocialMedia($link, $icon_class)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "insert into social_media (link, icon_class) values ('$link', '$icon_class')") or die (mysql_error());
   }
 
   function DeleteSocialMedia($id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "delete from social_media where id = '$id'") or die(mysql_error());
   }
 
@@ -96,6 +107,7 @@ class socialClass
 
   function GetSocialMedia()
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select link, icon_class from social_media") or die(mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -109,5 +121,5 @@ class socialClass
     return $resultRow;
   }
 }
-$socialClass  = new socialClass();
+$socialClass  = new socialClass($connectionClass);
 ?>

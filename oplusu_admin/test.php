@@ -1,4 +1,5 @@
 <?php
-session_start();
-require_once("interface1.php");
+include 'db.php';
+include 'controller/lang_setting.php';
+print $langClass->GetLangSetting();
 ?>

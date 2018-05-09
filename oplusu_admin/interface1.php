@@ -1,15 +1,15 @@
 <?php session_start();
 include 'db.php';
-include 'controller/lang_setting.inc';
-include 'controller/contactInfo_setting.inc';
-include 'controller/menu.inc';
-include 'controller/home_setting.inc';
-include 'controller/about_setting.inc';
-include 'controller/gallery_category_setting.inc';
-include 'controller/gallery_setting.inc';
-include 'controller/metaTag_setting.inc';
-include 'controller/social_setting.inc';
-include 'controller/news_setting.inc';
+include 'controller/lang_setting.php';
+include 'controller/contactInfo_setting.php';
+include 'controller/menu.php';
+include 'controller/home_setting.php';
+include 'controller/about_setting.php';
+include 'controller/gallery_category_setting.php';
+include 'controller/gallery_setting.php';
+include 'controller/metaTag_setting.php';
+include 'controller/social_setting.php';
+include 'controller/news_setting.php';
 include 'include.php';
 if(!isset($_SESSION["staff_id"]))
 {

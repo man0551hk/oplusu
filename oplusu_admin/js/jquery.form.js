@@ -182,7 +182,7 @@ $.fn.ajaxSubmit = function(options) {
         callbacks.push(function() { $form.resetForm(); });
     }
     if (options.clearForm) {
-        callbacks.push(function() { $form.clearForm(options.includeHidden); });
+        callbacks.push(function() { $form.clearForm(options.phpludeHidden); });
     }
 
     // perform a load on the target only if dataType is not provided

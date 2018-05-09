@@ -1,8 +1,15 @@
 <?php
 class AboutClass
 {
+  private $Connection;
+  public function __construct($connectionClass)
+  {
+    $this->Connection = $connectionClass;
+  }
+  
   function GetAboutSetting($lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $resultRow .= '<input type = "hidden" name = "lang_id" value = "'.$lang_id.'"/>';
     $result = mysqli_query($link, "select about_id, title, content from about_setting where lang_id = '$lang_id' order by about_id") or die(mysql_error());
@@ -51,21 +58,25 @@ class AboutClass
 
   function InsertAbout($title, $content, $lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "insert into about_setting (title, content, lang_id) values ('$title', '$content', '$lang_id')") or die (mysql_error());
   }
 
   function UpdateAbout($title, $content, $about_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "update about_setting set title = '$title', content = '$content' where about_id = '$about_id' ") or die (mysql_error());
   }
 
   function DeleteAbout($about_id)
   {
+    $link = $this->Connection->ConnectDB();
     mysqli_query($link, "delete from about_setting where about_id = '$about_id' ") or die (mysql_error());
   }
 
   function ReturnAboutID()
   {
+    $link = $this->Connection->ConnectDB();
     $aboutIDArray = array();
     $result = mysqli_query($link, "select about_id from about_setting order by about_id") or die(mysql_error());
     while($row = mysqli_fetch_array($result))
@@ -77,6 +88,7 @@ class AboutClass
 
   function GetAbout($lang_id)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select title, content from about_setting where lang_id = '$lang_id'") or die(mysql_error());
     $second = 0.5;
@@ -95,5 +107,5 @@ class AboutClass
 }
 
 
-$aboutClass = new AboutClass();
+$aboutClass = new AboutClass($connectionClass);
 ?>
