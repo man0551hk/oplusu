@@ -1,0 +1,17 @@
+RewriteEngine On
+RewriteRule ^project/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /color1/project_detail.php?project=$1 [NC,L]
+RewriteRule ^project/([A-Za-z0-9-]+)/?$  /color1/project_detail.php?project=$1 [NC,L]
+RewriteRule ^vendor/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /color1/vendor_detail.php?project=$1 [NC,L]
+RewriteRule ^vendor/([A-Za-z0-9-]+)/?$  /color1/vendor_detail.php?project=$1 [NC,L]
+RewriteRule ^news-article/([0-9]+)/([A-Za-z0-9-]+)/?$ /color/news_detail.php?news_id=$1 [NC,L]
+RewriteRule ^news-article/([0-9]+)/?$ /color1/news_detail.php?news_id=$1 [NC,L]
+RewriteRule ^news-article/([A-Za-z0-9-]+)/?$ /color1/news.php [NC,L]
+RewriteRule ^project?$  /color1/project.php
+RewriteRule ^vendor?$  /color1/vendor.php
+RewriteRule ^news-article?$ /color1/news.php
+RewriteRule ^about?$ /color1/about.php
+RewriteRule ^contact?$ /color1/contact.php
+RewriteRule ^([A-Za-z0-9-]+)/?$ /color1/index.php
+#RewriteRule index.php http://www.bcd-intl.com [L,R=301]
+#RewriteCond %{HTTP_HOST} !^bcd-intl.com$ [NC]
+#RewriteRule ^$ http://www.bcd-intl.com [L,R=301]

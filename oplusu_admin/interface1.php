@@ -7,6 +7,8 @@ include 'controller/home_setting.php';
 include 'controller/about_setting.php';
 include 'controller/gallery_category_setting.php';
 include 'controller/gallery_setting.php';
+include 'controller/vendor_category_setting.php';
+include 'controller/vendor_setting.php';
 include 'controller/metaTag_setting.php';
 include 'controller/social_setting.php';
 include 'controller/news_setting.php';

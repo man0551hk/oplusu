@@ -5,7 +5,7 @@ include("interface1.php");
 <link rel="stylesheet" href="/color1/js/vendor/isotope/css/styles.css">
 <script src="/color1/js/vendor/isotope/js/isotope.min.js"></script>
 <script src="/color1/js/vendor/isotope/js/main.js"></script>
-<!-- <section class="filter-section">
+<section class="filter-section">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-xs-12">
@@ -36,7 +36,7 @@ include("interface1.php");
                            ?>
                          </a><span>|</span></li>
                         <?php
-                          echo $galleryCategoryClass->GalleryCategory($currLang_id);
+                          echo $vendorCategoryClass->VendorCategory($currLang_id);
                         ?>
                     </ul>
                 </div>
@@ -44,14 +44,14 @@ include("interface1.php");
             </div>
         </div>
     </div>
-</section> -->
+</section>
 
 <section class="portfolio-section port-col">
     <div class="container">
         <div class="row">
             <div class="isotopeContainer wow fadeInUp animated" data-wow-duration="100ms" data-wow-delay="0.3s">
 
-                <?php echo $galleryClass->GetProject($currLang_id);?>
+                <?php echo $vendorClass->GetVendor($currLang_id);?>
             </div>
         </div>
     </div>

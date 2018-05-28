@@ -68,6 +68,22 @@ class MenuClass
     }
     $menu .= '<a href="gallery.php"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg> Gallery</a></li>';
 
+    if (strpos($_SERVER["REQUEST_URI"], 'vendor_category.php') !== false) {
+      $menu .= '<li class="active">';
+    }
+    else {
+      $menu .= '<li>';
+    }
+    $menu .= '<a href="vendor_category.php"><svg class="glyph stroked location pin"><use xlink:href="#stroked-location-pin"/></svg> vendor Category</a></li>';
+
+    if (strpos($_SERVER["REQUEST_URI"], 'vendor.php') !== false || strpos($_SERVER["REQUEST_URI"], 'vendor_new.php') !== false) {
+        $menu .= '<li class="active">';
+    }
+    else {
+      $menu .= '<li>';
+    }
+    $menu .= '<a href="vendor.php"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg> vendor</a></li>';
+
     if (strpos($_SERVER["REQUEST_URI"], 'news') !== false) {
         $menu .= '<li class="active">';
     }

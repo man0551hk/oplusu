@@ -7,7 +7,8 @@ include '../oplusu_admin/controller/metaTag_setting.php';
 include '../oplusu_admin/controller/social_setting.php';
 include '../oplusu_admin/controller/gallery_category_setting.php';
 include '../oplusu_admin/controller/gallery_setting.php';
-
+include '../oplusu_admin/controller/vendor_category_setting.php';
+include '../oplusu_admin/controller/vendor_setting.php';
 
 $currLang_id = $langClass->GetCookieLang();
 
@@ -106,8 +107,8 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
 
 
               <div class="navbar-brand">
-                  <a href="/" >
-                        <font style = "font-family:Century Gothic;">O+U</font>
+                  <a href="/">
+                        <font style = "font-family:Century Gothic;font-size: 3em;color: #a2a3a7;text-decoration:none;">O+U</font>
                       <!-- <img src="/images/logo.png" alt="O + U Logo"> -->
                   </a>
               </div>
