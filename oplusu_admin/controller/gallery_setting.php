@@ -11,7 +11,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select t.project_title, p.set_id, p.project_id, p.status, p.dorder from project p, project_title t where set_id = '$set_id' and t.lang_id = 1 and p.project_id = t.project_id order by p.dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select t.project_title, p.set_id, p.project_id, p.status, p.dorder from project p, project_title t where set_id = '$set_id' and t.lang_id = 1 and p.project_id = t.project_id order by p.dorder") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $projectName = $row["project_title"];
@@ -40,14 +40,14 @@ class GalleryClass
   function InsertProject($set_id)
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select max(dorder) as newOrder from project where set_id = '$set_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select max(dorder) as newOrder from project where set_id = '$set_id'") or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $newOrder = $value->newOrder + 1;
 
-    $result = mysqli_query($link, "insert into project (set_id, dorder, status) values ('$set_id', '$newOrder', 0)") or die (mysql_error());
-    $project_id = mysql_insert_id();
+    $result = mysqli_query($link, "insert into project (set_id, dorder, status) values ('$set_id', '$newOrder', 0)") or die (mysqli_error());
+    $project_id = mysqli_insert_id($link);
 
-    $result = mysqli_query($link, "insert into project_title (project_title, project_id, lang_id) select '', '$project_id', lang_id from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "insert into project_title (project_title, project_id, lang_id) select '', '$project_id', lang_id from lang_setting") or die (mysqli_error());
 
     return $project_id;
   }
@@ -56,7 +56,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $photo = 1;
-    $result = mysqli_query($link, 'select max(project_photo_id) as photo_id from project_photo') or die (mysql_error());
+    $result = mysqli_query($link, 'select max(project_photo_id) as photo_id from project_photo') or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $photo = $value->photo_id + 1;
     return $photo;
@@ -66,13 +66,13 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $sql = "select max(dorder) as newOrder from project_photo where project_id = '$project_id'";
-    $result = mysqli_query($link, $sql) or die (mysql_error());
+    $result = mysqli_query($link, $sql) or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $dorder = $value->newOrder + 1;
 
     $sql = "insert into project_photo (photo_path, project_id, dorder) values ('$filePath', '$project_id', '$dorder')";
-    $result = mysqli_query($link, $sql) or die (mysql_error());
-    return mysql_insert_id();
+    $result = mysqli_query($link, $sql) or die (mysqli_error());
+    return mysqli_insert_id($link);
   }
 
   function GetProjectImage($project_id, $set_id)
@@ -90,7 +90,7 @@ class GalleryClass
       $resultRow .= '</thead>';
 
       $reultRow .= '<tbody>';
-    $result = mysqli_query($link, "select * from project_photo where project_id = '$project_id' order by dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select * from project_photo where project_id = '$project_id' order by dorder") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr id = "'.$row["project_photo_id"].'">';
@@ -106,18 +106,18 @@ class GalleryClass
   function DeleteProjectPhoto($project_photo_id, $project_id, $set_id)
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select photo_path from project_photo where project_photo_id = '$project_photo_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select photo_path from project_photo where project_photo_id = '$project_photo_id'") or die (mysqli_error());
     $photo_path = mysqli_fetch_object($result)->photo_path;
     unlink('../'.$photo_path);
 
-    $result = mysqli_query($link, "delete from project_photo where project_photo_id = '$project_photo_id'") or die (mysql_error());
+    $result = mysqli_query($link, "delete from project_photo where project_photo_id = '$project_photo_id'") or die (mysqli_error());
 
-    $result = mysqli_query($link, "select project_photo_id from project_photo where project_id = '$project_id' order by dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select project_photo_id from project_photo where project_id = '$project_id' order by dorder") or die (mysqli_error());
     $num = 1;
     while($row = mysqli_fetch_array($result))
     {
       $photo_id = $row["project_photo_id"];
-      mysqli_query($link, "update project_photo set dorder = '$num' where project_photo_id = '$photo_id'") or die (mysql_error());
+      mysqli_query($link, "update project_photo set dorder = '$num' where project_photo_id = '$photo_id'") or die (mysqli_error());
       $num += 1;
     }
   }
@@ -127,7 +127,7 @@ class GalleryClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $resultRow .= '<tr>';
-    $result = mysqli_query($link, "select * from project_title t, lang_setting l where t.lang_id = l.lang_id and t.project_id = '$project_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select * from project_title t, lang_setting l where t.lang_id = l.lang_id and t.project_id = '$project_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -143,7 +143,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $ProjectTitleIDArray = Array();
-    $result = mysqli_query($link, "select * from project_title t, lang_setting l where t.lang_id = l.lang_id and t.project_id = '$project_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select * from project_title t, lang_setting l where t.lang_id = l.lang_id and t.project_id = '$project_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -157,7 +157,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $project_title = str_replace("'","\'", $project_title);
-    mysqli_query($link, "update project_title set project_title = '$project_title' where project_id = '$project_id' and project_title_id = '$project_title_id'") or die (mysql_error());
+    mysqli_query($link, "update project_title set project_title = '$project_title' where project_id = '$project_id' and project_title_id = '$project_title_id'") or die (mysqli_error());
   }
 
   function GetProjectSection($set_id, $project_id)
@@ -165,7 +165,7 @@ class GalleryClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
-    $result2 = mysqli_query($link, "select * from project_section_set where project_id ='$project_id'") or die (mysql_error());
+    $result2 = mysqli_query($link, "select * from project_section_set where project_id ='$project_id'") or die (mysqli_error());
     while($row2 = mysqli_fetch_array($result2))
     {
       $section_set_id = $row2["section_set_id"];
@@ -178,7 +178,7 @@ class GalleryClass
 
       $sql = "select * from project_section s, lang_setting l where s.lang_id = l.lang_id and s.project_id = '$project_id' and s.section_set_id = '$section_set_id'";
 
-      $result = mysqli_query($link, $sql) or die (mysql_error());
+      $result = mysqli_query($link, $sql) or die (mysqli_error());
 
       while($row = mysqli_fetch_array($result))
       {
@@ -200,7 +200,7 @@ class GalleryClass
 
     $resultRow .= "<h3>New Section</h3>";
 
-    $result = mysqli_query($link, "select * from lang_setting") or die(mysql_error());
+    $result = mysqli_query($link, "select * from lang_setting") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<div class = "row">';
@@ -223,7 +223,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $ProjectSectionIDArray = Array();
-    $result = mysqli_query($link, "select project_section_id from project_section where project_id = '$project_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select project_section_id from project_section where project_id = '$project_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -235,46 +235,46 @@ class GalleryClass
   function InsertSection($project_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into project_section_set (project_id, create_date) values ('$project_id', NOW())") or die (mysql_error());
-    return mysql_insert_id();
+    mysqli_query($link, "insert into project_section_set (project_id, create_date) values ('$project_id', NOW())") or die (mysqli_error());
+    return mysqli_insert_id($link);
   }
 
   function DeleteSection($section_set_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from project_section where section_set_id = '.$section_set_id.'") or die (mysql_error());
-    mysqli_query($link, "delete from project_section_set where section_set_id = '.$section_set_id.'") or die (mysql_error());
+    mysqli_query($link, "delete from project_section where section_set_id = '.$section_set_id.'") or die (mysqli_error());
+    mysqli_query($link, "delete from project_section_set where section_set_id = '.$section_set_id.'") or die (mysqli_error());
   }
 
   function InsertProjectSection($content, $project_id, $section_set_id, $lang_id)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "insert into project_section (content, project_id, section_set_id, lang_id) values ('$content', '$project_id', '$section_set_id', '$lang_id')") or die (mysql_error());
+    mysqli_query($link, "insert into project_section (content, project_id, section_set_id, lang_id) values ('$content', '$project_id', '$section_set_id', '$lang_id')") or die (mysqli_error());
   }
 
   function UpdateProjectSection($content, $project_section_id)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "update project_section set content = '$content' where project_section_id = '$project_section_id'") or die (mysql_error());
+    mysqli_query($link, "update project_section set content = '$content' where project_section_id = '$project_section_id'") or die (mysqli_error());
   }
 
   function GetProject($currLang_ID)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select set_id from gallery_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysql_error());
+    $result = mysqli_query($link, "select set_id from gallery_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $set_id = $row["set_id"];
 
       if($_GET["allprojectson"] == 1)
       {
-        $result2 = mysqli_query($link, "select project_id, seopath from project where set_id = '$set_id' order by dorder")  or die (mysql_error());
+        $result2 = mysqli_query($link, "select project_id, seopath from project where set_id = '$set_id' order by dorder")  or die (mysqli_error());
       }
       else {
-        $result2 = mysqli_query($link, "select project_id, seopath from project where status = 1 and set_id = '$set_id' order by dorder")  or die (mysql_error());
+        $result2 = mysqli_query($link, "select project_id, seopath from project where status = 1 and set_id = '$set_id' order by dorder")  or die (mysqli_error());
       }
 
       while($row2 = mysqli_fetch_array($result2))
@@ -287,7 +287,7 @@ class GalleryClass
 
 
 
-                    $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysql_error());
+                    $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysqli_error());
                     $firstPhoto = mysqli_fetch_object($resultFirstPhoto)->photo_path;
                     //$resultRow .= '<a href = "project_detail.php?project_id='.$project_id.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
 
@@ -315,7 +315,7 @@ class GalleryClass
                     }
                 $resultRow .= '</figure>';
 
-                $resultTitle = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_ID'") or die (mysql_error());
+                $resultTitle = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_ID'") or die (mysqli_error());
                 $resultRow .= '<div class="article-title">';
 
                 if($currLang_ID != 1)
@@ -374,7 +374,7 @@ class GalleryClass
     $firstImageResult = '';
     $secondImageResult = '';
 
-    $statusRs = mysqli_query($link, "select project_id from project where project_id = '$project_id' and status = 1") or die(mysql_error());
+    $statusRs = mysqli_query($link, "select project_id from project where project_id = '$project_id' and status = 1") or die(mysqli_error());
     $status = mysqli_fetch_object($statusRs)->project_id;
 
     $allow = false;
@@ -392,7 +392,7 @@ class GalleryClass
 
     if($allow)
     {
-      $result = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder") or die (mysql_error());
+      $result = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder") or die (mysqli_error());
       $count = 0;
       while($row = mysqli_fetch_array($result))
       {
@@ -410,10 +410,10 @@ class GalleryClass
       }
 
       $resultRow = '';
-      $resultTitle = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_id'") or die (mysql_error());
+      $resultTitle = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_id'") or die (mysqli_error());
       $resultRow .= '<h2>'.mysqli_fetch_object($resultTitle)->project_title.'</h2>';
 
-      $result = mysqli_query($link, "select content from project_section where project_id = '$project_id' and lang_id = '$currLang_id' order by project_section_id") or die (mysql_error());
+      $result = mysqli_query($link, "select content from project_section where project_id = '$project_id' and lang_id = '$currLang_id' order by project_section_id") or die (mysqli_error());
       while($row = mysqli_fetch_array($result))
       {
         $resultRow .= $row["content"];
@@ -430,7 +430,7 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select status from project where project_id = '$project_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select status from project where project_id = '$project_id'") or die (mysqli_error());
     $status = mysqli_fetch_object($result)->status;
     if($status == 1)
     {
@@ -448,14 +448,14 @@ class GalleryClass
   function SaveGalleryStatus($project_id, $action)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update project set status = '$action' where project_id = '$project_id'") or die (mysql_error());
+    mysqli_query($link, "update project set status = '$action' where project_id = '$project_id'") or die (mysqli_error());
   }
 
   function GetProjectSEOPath($project_id)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select seopath from project where project_id = '$project_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select seopath from project where project_id = '$project_id'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr><td><input type = "text" name ="seopath" id ="seopath" value = "'.$row["seopath"].'" class="form-control"/></td></tr>';
@@ -467,13 +467,13 @@ class GalleryClass
   {
     $link = $this->Connection->ConnectDB();
     $seopath = str_replace(",", "", $seopath);
-    mysqli_query($link, "update project set seopath = '$seopath' where project_id = '$project_id'") or die (mysql_error());
+    mysqli_query($link, "update project set seopath = '$seopath' where project_id = '$project_id'") or die (mysqli_error());
   }
 
   function ProjectSEOPath($seopath)
   {
     $resultRow = '';
-    $result = mysqli_query($link, "select project_id from project where seopath = '$seopath'") or die (mysql_error());
+    $result = mysqli_query($link, "select project_id from project where seopath = '$seopath'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow .= $row["project_id"];
@@ -484,13 +484,13 @@ class GalleryClass
   function UpdateDorder($project_id, $set_id, $dorder)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update project set dorder = '$dorder' where project_id = $project_id and set_id = '$set_id'") or die (mysql_error());
+    mysqli_query($link, "update project set dorder = '$dorder' where project_id = $project_id and set_id = '$set_id'") or die (mysqli_error());
   }
 
   function UpdatePhotoDorder($project_photo_id, $project_id, $dorder)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update project_photo set dorder = '$dorder' where $project_photo_id = '$project_photo_id' and project_id = $project_id") or die (mysql_error());
+    mysqli_query($link, "update project_photo set dorder = '$dorder' where $project_photo_id = '$project_photo_id' and project_id = $project_id") or die (mysqli_error());
 
   }
 }

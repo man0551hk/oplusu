@@ -11,7 +11,7 @@ class NewsClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select display_name, lang_id from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select display_name, lang_id from lang_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<h3>'.$row["display_name"].'</h3>';
@@ -20,7 +20,7 @@ class NewsClass
       $resultRow .= '<tr><td>Title</td><td>Status</td></tr>';
       $resultRow .= '</thead>';
       $lang_id = $row["lang_id"];
-      $result2 = mysqli_query($link, "select * from news where lang_id = '$lang_id'") or die (mysql_error());
+      $result2 = mysqli_query($link, "select * from news where lang_id = '$lang_id'") or die (mysqli_error());
 
       while($row2 = mysqli_fetch_array($result2))
       {
@@ -52,8 +52,8 @@ class NewsClass
   function CreateNews()
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into news (news_title, lang_id, status, image_path) values ('', 1, 0, '')") or die (mysql_error());
-    $news_id = mysql_insert_id();
+    mysqli_query($link, "insert into news (news_title, lang_id, status, image_path) values ('', 1, 0, '')") or die (mysqli_error());
+    $news_id = mysqli_insert_id($link);
     return $news_id;
   }
 
@@ -61,11 +61,11 @@ class NewsClass
   {
     $link = $this->Connection->ConnectDB();
     $news = Array();
-    $result = mysqli_query($link, "select * from news where news_id = '$news_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select * from news where news_id = '$news_id'") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $news[] = $row["news_title"];
-      $result2 = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
+      $result2 = mysqli_query($link, "select * from lang_setting") or die (mysqli_error());
       $option = '';
       while($row2 = mysqli_fetch_array($result2))
       {
@@ -98,7 +98,7 @@ class NewsClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select * from news_section where news_id = '$news_id' order by section_id") or die(mysql_error());
+    $result = mysqli_query($link, "select * from news_section where news_id = '$news_id' order by section_id") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<h4>Section #'.$row["section_id"].'</h4>';
@@ -132,40 +132,40 @@ class NewsClass
   function SaveNewsCoverPhoto($news_id, $photo_path)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update news set image_path = '$photo_path' where news_id = '$news_id'") or die(mysql_error());
+    mysqli_query($link, "update news set image_path = '$photo_path' where news_id = '$news_id'") or die(mysqli_error());
   }
 
   function UpdateNewsInfo($news_id, $news_title, $lang_id)
   {
     $link = $this->Connection->ConnectDB();
     $news_title = str_replace("'","\'", $news_title);
-    mysqli_query($link, "update news set news_title = '$news_title', lang_id = '$lang_id' where news_id = '$news_id'") or die(mysql_error());
+    mysqli_query($link, "update news set news_title = '$news_title', lang_id = '$lang_id' where news_id = '$news_id'") or die(mysqli_error());
   }
 
   function InsertNewsSection($news_id, $content)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "insert into news_section (news_id, content) values ('$news_id', '$content')") or die (mysql_error());
+    mysqli_query($link, "insert into news_section (news_id, content) values ('$news_id', '$content')") or die (mysqli_error());
   }
 
   function UpdateNewsSection($section_id, $content)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "update news_section set content = '$content' where section_id = '$section_id'") or die(mysql_error());
+    mysqli_query($link, "update news_section set content = '$content' where section_id = '$section_id'") or die(mysqli_error());
   }
 
   function DeleteNewsSection($section_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from news_section where section_id = '$section_id'") or die(mysql_error());
+    mysqli_query($link, "delete from news_section where section_id = '$section_id'") or die(mysqli_error());
   }
 
   function GetNewsSectionIDArray($news_id)
   {
     $sectionIDArray = Array();
-    $result = mysqli_query($link, "select section_id from news_section where news_id = '$news_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select section_id from news_section where news_id = '$news_id'") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $sectionIDArray[] = $row["section_id"];
@@ -176,23 +176,23 @@ class NewsClass
   function DeleteNewsCoverImage($news_id)
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select image_path from news where news_id = '$news_id'") or die(mysql_error());
+    $result = mysqli_query($link, "select image_path from news where news_id = '$news_id'") or die(mysqli_error());
     $image_path = mysqli_fetch_object($result)->image_path;
-    mysqli_query($link, "update news set image_path = '' where news_id= '$news_id'") or die (mysql_error());
+    mysqli_query($link, "update news set image_path = '' where news_id= '$news_id'") or die (mysqli_error());
     unlink($image_path);
   }
 
   function PublishNews($news_id, $action)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update news set status = '$action' where news_id = '$news_id'")  or die(mysql_error());
+    mysqli_query($link, "update news set status = '$action' where news_id = '$news_id'")  or die(mysqli_error());
   }
 
   function GetNews($lang_id)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select * from news where status = 1 and lang_id = '$lang_id' order by news_id desc") or die (mysql_error());
+    $result = mysqli_query($link, "select * from news where status = 1 and lang_id = '$lang_id' order by news_id desc") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<div class="col-sm-3 col-xs-12 item">';
@@ -204,7 +204,7 @@ class NewsClass
       $resultRow .= '<figcaption>';
       $resultRow .= '<h4>'.$row["news_title"].'</h4>';
       $news_id = $row["news_id"];
-      $result2 = mysqli_query($link, "select content from news_section where news_id = '$news_id' order by section_id asc limit 1") or die(mysql_error());
+      $result2 = mysqli_query($link, "select content from news_section where news_id = '$news_id' order by section_id asc limit 1") or die(mysqli_error());
       if($row2 = mysqli_fetch_array($result2))
       {
           $resultRow .= '<p>'.$row2["content"].'</p>';
@@ -222,13 +222,13 @@ class NewsClass
   {
     $link = $this->Connection->ConnectDB();
     $news = Array();
-    $result = mysqli_query($link, "select image_path from news where news_id = '$news_id'") or die(mysql_error());
+    $result = mysqli_query($link, "select image_path from news where news_id = '$news_id'") or die(mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $news[] = $row["image_path"];
     }
     $content = '';
-    $result = mysqli_query($link, "select content from news_section where news_id = '$news_id' order by section_id") or die(mysql_error());
+    $result = mysqli_query($link, "select content from news_section where news_id = '$news_id' order by section_id") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $content .= $row["content"];

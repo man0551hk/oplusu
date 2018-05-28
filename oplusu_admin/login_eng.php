@@ -8,7 +8,7 @@ if(isset($_POST["login"]) && isset($_POST["password"]) && isset($_POST["verifyCo
     $thislink = $connectionClass->ConnectDB();
     $login = $_POST["login"];
     $password = $_POST["password"];
-    $result = mysqli_query($thislink, "select staff_id from staff where login = '$login' and password = '$password'") or die(mysql_error());
+    $result = mysqli_query($thislink, "select staff_id from staff where login = '$login' and password = '$password'") or die(mysqli_error());
     $staff_id = mysqli_fetch_object($result)->staff_id;
     if($staff_id != '')
     {

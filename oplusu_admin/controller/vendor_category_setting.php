@@ -12,18 +12,18 @@ class VendorCategoryClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
-    $result = mysqli_query($link, "select * from vendor_category") or die (mysql_error());
+    $result = mysqli_query($link, "select * from vendor_category") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $set_id = $row["set_id"];
       $resultRow .= '<tr>';
-      $result2 = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
+      $result2 = mysqli_query($link, "select * from lang_setting") or die (mysqli_error());
       while($row2 = mysqli_fetch_array($result2))
       {
         $lang_id = $row2["lang_id"];
 
         $resultRow .= '<td>';
-        $result3 = mysqli_query($link, "select * from vendor_category_setting where lang_id = '$lang_id' and set_id = '$set_id'") or  (mysql_error());
+        $result3 = mysqli_query($link, "select * from vendor_category_setting where lang_id = '$lang_id' and set_id = '$set_id'") or  (mysqli_error());
         if($row3 = mysqli_fetch_array($result3))
         {
             $resultRow .= $row2["display_name"] . '<input type = "text" name = "editcategory'.$row3["category_id"].'" value = "'.$row3["category"].'" />';
@@ -42,7 +42,7 @@ class VendorCategoryClass
     $resultRow .= '<td colspan = "5">New Category</td>';
     $resutRow .= '</tr>';
     $resultRow .= '<tr>';
-    $result = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select * from lang_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<td>';
@@ -57,40 +57,40 @@ class VendorCategoryClass
     return $resultRow;
   }
 
-  function InsertCategory()
+  function InsertVendorCategory()
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into vendor_category (create_date) values (NOW())") or die (mysql_error());
-    $set_id = mysql_insert_id();
+    mysqli_query($link, "insert into vendor_category (create_date) values (NOW())") or die (mysqli_error());
+    $set_id = mysqli_insert_id($link);
     return $set_id;
   }
 
-  function InsertvendorCategory($category, $set_id, $lang_id)
+  function InsertVendorCategorySetting($category, $set_id, $lang_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into vendor_category_setting (category, set_id, lang_id) values ('$category', '$set_id', '$lang_id')") or (mysql_error());
-    $category_id = mysql_insert_id();
+    mysqli_query($link, "insert into vendor_category_setting (category, set_id, lang_id) values ('$category', '$set_id', '$lang_id')") or (mysqli_error());
+    $category_id = mysqli_insert_id($link);
     return $category_id;
   }
 
-  function UpdatevendorCategory($category, $category_id)
+  function UpdateVendorCategory($category, $category_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update vendor_category_setting set category = '$category' where category_id = '$category_id'") or (mysql_error());
+    mysqli_query($link, "update vendor_category_setting set category = '$category' where category_id = '$category_id'") or (mysqli_error());
   }
 
-  function DeletevendorCategory($set_id)
+  function DeleteVendorCategory($set_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from vendor_category where set_id = '$set_id'") or (mysql_error());
-    mysqli_query($link, "delete from vendor_category_setting where set_id = '$set_id'") or (mysql_error());
+    mysqli_query($link, "delete from vendor_category where set_id = '$set_id'") or (mysqli_error());
+    mysqli_query($link, "delete from vendor_category_setting where set_id = '$set_id'") or (mysqli_error());
   }
 
-  function ReturnCategroyID()
+  function ReturnVendorCategroyID()
   {
     $link = $this->Connection->ConnectDB();
     $categoryIDArray = Array();
-    $result = mysqli_query($link, "select category_id from vendor_category_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select category_id from vendor_category_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $categoryIDArray[] = $row["category_id"];
@@ -102,7 +102,7 @@ class VendorCategoryClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select * from vendor_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysql_error());
+    $result = mysqli_query($link, "select * from vendor_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<li><a href="#" data-filter=".' . $row["set_id"] . '">' . $row["category"] . '</a><span>|</span></li>';
@@ -110,11 +110,11 @@ class VendorCategoryClass
     return $resultRow;
   }
 
-  function ReturnCategroyDropDown($set_id)
+  function ReturnVendorCategroyDropDown($set_id)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select category_id, category, set_id from vendor_category_setting where lang_id = 1") or die (mysql_error());
+    $result = mysqli_query($link, "select category_id, category, set_id from vendor_category_setting where lang_id = 1") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       if($row["set_id"] == $set_id)

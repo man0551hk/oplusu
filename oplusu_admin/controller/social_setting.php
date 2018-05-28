@@ -11,7 +11,7 @@ class socialClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select * from social_media") or die (mysql_error());
+    $result = mysqli_query($link, "select * from social_media") or die (mysqli_error());
     $iconClassArray = $this->iconClass();
     while($row = mysqli_fetch_array($result))
     {
@@ -61,7 +61,7 @@ class socialClass
   {
     $link = $this->Connection->ConnectDB();
     $socialIDArray = Array();
-    $result = mysqli_query($link, "select id from social_media") or die (mysql_error());
+    $result = mysqli_query($link, "select id from social_media") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -74,19 +74,19 @@ class socialClass
   function SaveSocialMedia($id, $link, $icon_class)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update social_media set link = '$link', icon_class = '$icon_class' where id = '$id'") or die (mysql_error());
+    mysqli_query($link, "update social_media set link = '$link', icon_class = '$icon_class' where id = '$id'") or die (mysqli_error());
   }
 
   function InsertSocialMedia($link, $icon_class)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into social_media (link, icon_class) values ('$link', '$icon_class')") or die (mysql_error());
+    mysqli_query($link, "insert into social_media (link, icon_class) values ('$link', '$icon_class')") or die (mysqli_error());
   }
 
   function DeleteSocialMedia($id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from social_media where id = '$id'") or die(mysql_error());
+    mysqli_query($link, "delete from social_media where id = '$id'") or die(mysqli_error());
   }
 
   function iconClass()
@@ -109,7 +109,7 @@ class socialClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select link, icon_class from social_media") or die(mysql_error());
+    $result = mysqli_query($link, "select link, icon_class from social_media") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<li>';

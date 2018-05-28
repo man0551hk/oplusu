@@ -124,13 +124,13 @@ class MenuClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select display_name, lang_id from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select display_name, lang_id from lang_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<h3>'.$row["display_name"].'</h3>';
       $resultRow .= '<table data-toggle="table" id="table-style" data-row-style="rowStyle" class="table table-hover">';
       $lang_id = $row["lang_id"];
-      $result2 = mysqli_query($link, "select * from menu where lang_id = '$lang_id'") or die (mysql_error());
+      $result2 = mysqli_query($link, "select * from menu where lang_id = '$lang_id'") or die (mysqli_error());
       $resultRow .= '<tr>';
       while($row2 = mysqli_fetch_array($result2))
       {
@@ -159,7 +159,7 @@ class MenuClass
   function SaveMenuSetting($id, $name, $status)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update menu set name = '$name', status = '$status' where id='$id'") or die (mysql_error());
+    mysqli_query($link, "update menu set name = '$name', status = '$status' where id='$id'") or die (mysqli_error());
   }
 
 
@@ -173,7 +173,7 @@ class MenuClass
       $sql = "select url, name from menu where lang_id = '$currLang_id' and (status = 1 or url = 'gallery.php') order by id";
     }
 
-    $result = mysqli_query($link, $sql) or die (mysql_error());
+    $result = mysqli_query($link, $sql) or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       if($currLang_id != 1)
@@ -202,13 +202,13 @@ class MenuClass
     }
 
     $sql = "select count(*) as totalLang from lang_setting where open = 1";
-    $result2 = mysqli_query($link, $sql) or die(mysql_error());
+    $result2 = mysqli_query($link, $sql) or die(mysqli_error());
     $totalLang = mysqli_fetch_object($result2)->totalLang;
 
     if($totalLang >  1)
     {
       $sql = "select display_name from lang_setting where lang_id = '$currLang_id'";
-      $result2 = mysqli_query($link, $sql) or die(mysql_error());
+      $result2 = mysqli_query($link, $sql) or die(mysqli_error());
       $display_name = mysqli_fetch_object($result2)->display_name;
 
       $resultRow .= '<li class="dropdown">';
@@ -217,7 +217,7 @@ class MenuClass
       $resultRow .= '<ul>';
 
       $sql = "select lang_code, display_name from lang_setting where open = 1 and lang_id != '$currLang_id'";
-      $result = mysqli_query($link, $sql) or die (mysql_error());
+      $result = mysqli_query($link, $sql) or die (mysqli_error());
       while($row = mysqli_fetch_array($result))
       {
         $resultRow .= '<li><a href=\'javascript:SetCookieLang("'.$row["lang_code"].'", "'.$_SERVER["REQUEST_URI"].'")\'>'.$row["display_name"].'</a></li>';

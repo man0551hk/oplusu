@@ -29,7 +29,7 @@ include("interface1.php");
 
   if($allowInsert == true)
   {
-    $set_id = $vendorCategoryClass->InsertCategory();
+    $set_id = $vendorCategoryClass->InsertVendorCategory();
 
     for($i =  0; $i< sizeof($langIDArray); $i++)
     {
@@ -38,7 +38,7 @@ include("interface1.php");
         $category = $_POST["newCategory".$langIDArray[$i]];
         //echo 'cat '. $category . '<br/>';
         $lang_id = $langIDArray[$i];
-        $vendorCategoryClass->InsertVendorCategory($category, $set_id, $lang_id);
+        $vendorCategoryClass->InsertVendorCategorySetting($category, $set_id, $lang_id);
       }
     }
   }

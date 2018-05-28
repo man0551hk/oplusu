@@ -11,7 +11,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select t.vendor_title, p.set_id, p.vendor_id, p.status, p.dorder from vendor p, vendor_title t where set_id = '$set_id' and t.lang_id = 1 and p.vendor_id = t.vendor_id order by p.dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select t.vendor_title, p.set_id, p.vendor_id, p.status, p.dorder from vendor p, vendor_title t where set_id = '$set_id' and t.lang_id = 1 and p.vendor_id = t.vendor_id order by p.dorder") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $vendorName = $row["vendor_title"];
@@ -40,14 +40,14 @@ class VendorClass
   function Insertvendor($set_id)
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select max(dorder) as newOrder from vendor where set_id = '$set_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select max(dorder) as newOrder from vendor where set_id = '$set_id'") or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $newOrder = $value->newOrder + 1;
 
-    $result = mysqli_query($link, "insert into vendor (set_id, dorder, status) values ('$set_id', '$newOrder', 0)") or die (mysql_error());
-    $vendor_id = mysql_insert_id();
+    $result = mysqli_query($link, "insert into vendor (set_id, dorder, status) values ('$set_id', '$newOrder', 0)") or die (mysqli_error());
+    $vendor_id = mysqli_insert_id($link);
 
-    $result = mysqli_query($link, "insert into vendor_title (vendor_title, vendor_id, lang_id) select '', '$vendor_id', lang_id from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "insert into vendor_title (vendor_title, vendor_id, lang_id) select '', '$vendor_id', lang_id from lang_setting") or die (mysqli_error());
 
     return $vendor_id;
   }
@@ -56,7 +56,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $photo = 1;
-    $result = mysqli_query($link, 'select max(vendor_photo_id) as photo_id from vendor_photo') or die (mysql_error());
+    $result = mysqli_query($link, 'select max(vendor_photo_id) as photo_id from vendor_photo') or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $photo = $value->photo_id + 1;
     return $photo;
@@ -66,13 +66,13 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $sql = "select max(dorder) as newOrder from vendor_photo where vendor_id = '$vendor_id'";
-    $result = mysqli_query($link, $sql) or die (mysql_error());
+    $result = mysqli_query($link, $sql) or die (mysqli_error());
     $value = mysqli_fetch_object($result);
     $dorder = $value->newOrder + 1;
 
     $sql = "insert into vendor_photo (photo_path, vendor_id, dorder) values ('$filePath', '$vendor_id', '$dorder')";
-    $result = mysqli_query($link, $sql) or die (mysql_error());
-    return mysql_insert_id();
+    $result = mysqli_query($link, $sql) or die (mysqli_error());
+    return mysqli_insert_id($link);
   }
 
   function GetVendorImage($vendor_id, $set_id)
@@ -90,7 +90,7 @@ class VendorClass
       $resultRow .= '</thead>';
 
       $reultRow .= '<tbody>';
-    $result = mysqli_query($link, "select * from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select * from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr id = "'.$row["vendor_photo_id"].'">';
@@ -106,18 +106,18 @@ class VendorClass
   function DeleteVendorPhoto($vendor_photo_id, $vendor_id, $set_id)
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select photo_path from vendor_photo where vendor_photo_id = '$vendor_photo_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select photo_path from vendor_photo where vendor_photo_id = '$vendor_photo_id'") or die (mysqli_error());
     $photo_path = mysqli_fetch_object($result)->photo_path;
     unlink('../'.$photo_path);
 
-    $result = mysqli_query($link, "delete from vendor_photo where vendor_photo_id = '$vendor_photo_id'") or die (mysql_error());
+    $result = mysqli_query($link, "delete from vendor_photo where vendor_photo_id = '$vendor_photo_id'") or die (mysqli_error());
 
-    $result = mysqli_query($link, "select vendor_photo_id from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysql_error());
+    $result = mysqli_query($link, "select vendor_photo_id from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysqli_error());
     $num = 1;
     while($row = mysqli_fetch_array($result))
     {
       $photo_id = $row["vendor_photo_id"];
-      mysqli_query($link, "update vendor_photo set dorder = '$num' where vendor_photo_id = '$photo_id'") or die (mysql_error());
+      mysqli_query($link, "update vendor_photo set dorder = '$num' where vendor_photo_id = '$photo_id'") or die (mysqli_error());
       $num += 1;
     }
   }
@@ -127,7 +127,7 @@ class VendorClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $resultRow .= '<tr>';
-    $result = mysqli_query($link, "select * from vendor_title t, lang_setting l where t.lang_id = l.lang_id and t.vendor_id = '$vendor_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select * from vendor_title t, lang_setting l where t.lang_id = l.lang_id and t.vendor_id = '$vendor_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -143,7 +143,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $vendorTitleIDArray = Array();
-    $result = mysqli_query($link, "select * from vendor_title t, lang_setting l where t.lang_id = l.lang_id and t.vendor_id = '$vendor_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select * from vendor_title t, lang_setting l where t.lang_id = l.lang_id and t.vendor_id = '$vendor_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -157,7 +157,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $vendor_title = str_replace("'","\'", $vendor_title);
-    mysqli_query($link, "update vendor_title set vendor_title = '$vendor_title' where vendor_id = '$vendor_id' and vendor_title_id = '$vendor_title_id'") or die (mysql_error());
+    mysqli_query($link, "update vendor_title set vendor_title = '$vendor_title' where vendor_id = '$vendor_id' and vendor_title_id = '$vendor_title_id'") or die (mysqli_error());
   }
 
   function GetVendorSection($set_id, $vendor_id)
@@ -165,7 +165,7 @@ class VendorClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
-    $result2 = mysqli_query($link, "select * from vendor_section_set where vendor_id ='$vendor_id'") or die (mysql_error());
+    $result2 = mysqli_query($link, "select * from vendor_section_set where vendor_id ='$vendor_id'") or die (mysqli_error());
     while($row2 = mysqli_fetch_array($result2))
     {
       $section_set_id = $row2["section_set_id"];
@@ -178,7 +178,7 @@ class VendorClass
 
       $sql = "select * from vendor_section s, lang_setting l where s.lang_id = l.lang_id and s.vendor_id = '$vendor_id' and s.section_set_id = '$section_set_id'";
 
-      $result = mysqli_query($link, $sql) or die (mysql_error());
+      $result = mysqli_query($link, $sql) or die (mysqli_error());
 
       while($row = mysqli_fetch_array($result))
       {
@@ -200,7 +200,7 @@ class VendorClass
 
     $resultRow .= "<h3>New Section</h3>";
 
-    $result = mysqli_query($link, "select * from lang_setting") or die(mysql_error());
+    $result = mysqli_query($link, "select * from lang_setting") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<div class = "row">';
@@ -223,7 +223,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $vendorSectionIDArray = Array();
-    $result = mysqli_query($link, "select vendor_section_id from vendor_section where vendor_id = '$vendor_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select vendor_section_id from vendor_section where vendor_id = '$vendor_id'") or die (mysqli_error());
 
     while($row = mysqli_fetch_array($result))
     {
@@ -235,46 +235,46 @@ class VendorClass
   function InsertSection($vendor_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "insert into vendor_section_set (vendor_id, create_date) values ('$vendor_id', NOW())") or die (mysql_error());
-    return mysql_insert_id();
+    mysqli_query($link, "insert into vendor_section_set (vendor_id, create_date) values ('$vendor_id', NOW())") or die (mysqli_error());
+    return mysqli_insert_id($link);
   }
 
   function DeleteSection($section_set_id)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from vendor_section where section_set_id = '.$section_set_id.'") or die (mysql_error());
-    mysqli_query($link, "delete from vendor_section_set where section_set_id = '.$section_set_id.'") or die (mysql_error());
+    mysqli_query($link, "delete from vendor_section where section_set_id = '.$section_set_id.'") or die (mysqli_error());
+    mysqli_query($link, "delete from vendor_section_set where section_set_id = '.$section_set_id.'") or die (mysqli_error());
   }
 
   function InsertVendorSection($content, $vendor_id, $section_set_id, $lang_id)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "insert into vendor_section (content, vendor_id, section_set_id, lang_id) values ('$content', '$vendor_id', '$section_set_id', '$lang_id')") or die (mysql_error());
+    mysqli_query($link, "insert into vendor_section (content, vendor_id, section_set_id, lang_id) values ('$content', '$vendor_id', '$section_set_id', '$lang_id')") or die (mysqli_error());
   }
 
   function UpdateVendorSection($content, $vendor_section_id)
   {
     $link = $this->Connection->ConnectDB();
     $content = str_replace("'","\'", $content);
-    mysqli_query($link, "update vendor_section set content = '$content' where vendor_section_id = '$vendor_section_id'") or die (mysql_error());
+    mysqli_query($link, "update vendor_section set content = '$content' where vendor_section_id = '$vendor_section_id'") or die (mysqli_error());
   }
 
   function GetVendor($currLang_ID)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select set_id from vendor_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysql_error());
+    $result = mysqli_query($link, "select set_id from vendor_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $set_id = $row["set_id"];
 
       if($_GET["allvendorson"] == 1)
       {
-        $result2 = mysqli_query($link, "select vendor_id, seopath from vendor where set_id = '$set_id' order by dorder")  or die (mysql_error());
+        $result2 = mysqli_query($link, "select vendor_id, seopath from vendor where set_id = '$set_id' order by dorder")  or die (mysqli_error());
       }
       else {
-        $result2 = mysqli_query($link, "select vendor_id, seopath from vendor where status = 1 and set_id = '$set_id' order by dorder")  or die (mysql_error());
+        $result2 = mysqli_query($link, "select vendor_id, seopath from vendor where status = 1 and set_id = '$set_id' order by dorder")  or die (mysqli_error());
       }
 
       while($row2 = mysqli_fetch_array($result2))
@@ -287,7 +287,7 @@ class VendorClass
 
 
 
-                    $resultFirstPhoto = mysqli_query($link, "select photo_path from vendor_photo where vendor_id = '$vendor_id' order by dorder limit 1")  or die (mysql_error());
+                    $resultFirstPhoto = mysqli_query($link, "select photo_path from vendor_photo where vendor_id = '$vendor_id' order by dorder limit 1")  or die (mysqli_error());
                     $firstPhoto = mysqli_fetch_object($resultFirstPhoto)->photo_path;
                     //$resultRow .= '<a href = "vendor_detail.php?vendor_id='.$vendor_id.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
 
@@ -315,7 +315,7 @@ class VendorClass
                     }
                 $resultRow .= '</figure>';
 
-                $resultTitle = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$vendor_id' and lang_id = '$currLang_ID'") or die (mysql_error());
+                $resultTitle = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$vendor_id' and lang_id = '$currLang_ID'") or die (mysqli_error());
                 $resultRow .= '<div class="article-title">';
 
                 if($currLang_ID != 1)
@@ -374,7 +374,7 @@ class VendorClass
     $firstImageResult = '';
     $secondImageResult = '';
 
-    $statusRs = mysqli_query($link, "select vendor_id from vendor where vendor_id = '$vendor_id' and status = 1") or die(mysql_error());
+    $statusRs = mysqli_query($link, "select vendor_id from vendor where vendor_id = '$vendor_id' and status = 1") or die(mysqli_error());
     $status = mysqli_fetch_object($statusRs)->vendor_id;
 
     $allow = false;
@@ -392,7 +392,7 @@ class VendorClass
 
     if($allow)
     {
-      $result = mysqli_query($link, "select photo_path from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysql_error());
+      $result = mysqli_query($link, "select photo_path from vendor_photo where vendor_id = '$vendor_id' order by dorder") or die (mysqli_error());
       $count = 0;
       while($row = mysqli_fetch_array($result))
       {
@@ -410,10 +410,10 @@ class VendorClass
       }
 
       $resultRow = '';
-      $resultTitle = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$vendor_id' and lang_id = '$currLang_id'") or die (mysql_error());
+      $resultTitle = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$vendor_id' and lang_id = '$currLang_id'") or die (mysqli_error());
       $resultRow .= '<h2>'.mysqli_fetch_object($resultTitle)->vendor_title.'</h2>';
 
-      $result = mysqli_query($link, "select content from vendor_section where vendor_id = '$vendor_id' and lang_id = '$currLang_id' order by vendor_section_id") or die (mysql_error());
+      $result = mysqli_query($link, "select content from vendor_section where vendor_id = '$vendor_id' and lang_id = '$currLang_id' order by vendor_section_id") or die (mysqli_error());
       while($row = mysqli_fetch_array($result))
       {
         $resultRow .= $row["content"];
@@ -430,7 +430,7 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select status from vendor where vendor_id = '$vendor_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select status from vendor where vendor_id = '$vendor_id'") or die (mysqli_error());
     $status = mysqli_fetch_object($result)->status;
     if($status == 1)
     {
@@ -448,14 +448,14 @@ class VendorClass
   function SaveVendorStatus($vendor_id, $action)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update vendor set status = '$action' where vendor_id = '$vendor_id'") or die (mysql_error());
+    mysqli_query($link, "update vendor set status = '$action' where vendor_id = '$vendor_id'") or die (mysqli_error());
   }
 
   function GetVendorSEOPath($vendor_id)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select seopath from vendor where vendor_id = '$vendor_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select seopath from vendor where vendor_id = '$vendor_id'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr><td><input type = "text" name ="seopath" id ="seopath" value = "'.$row["seopath"].'" class="form-control"/></td></tr>';
@@ -467,13 +467,13 @@ class VendorClass
   {
     $link = $this->Connection->ConnectDB();
     $seopath = str_replace(",", "", $seopath);
-    mysqli_query($link, "update vendor set seopath = '$seopath' where vendor_id = '$vendor_id'") or die (mysql_error());
+    mysqli_query($link, "update vendor set seopath = '$seopath' where vendor_id = '$vendor_id'") or die (mysqli_error());
   }
 
   function VendorSEOPath($seopath)
   {
     $resultRow = '';
-    $result = mysqli_query($link, "select vendor_id from vendor where seopath = '$seopath'") or die (mysql_error());
+    $result = mysqli_query($link, "select vendor_id from vendor where seopath = '$seopath'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow .= $row["vendor_id"];
@@ -484,13 +484,13 @@ class VendorClass
   function UpdateDorder($vendor_id, $set_id, $dorder)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update vendor set dorder = '$dorder' where vendor_id = $vendor_id and set_id = '$set_id'") or die (mysql_error());
+    mysqli_query($link, "update vendor set dorder = '$dorder' where vendor_id = $vendor_id and set_id = '$set_id'") or die (mysqli_error());
   }
 
   function UpdatePhotoDorder($vendor_photo_id, $vendor_id, $dorder)
   {
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "update vendor_photo set dorder = '$dorder' where $vendor_photo_id = '$vendor_photo_id' and vendor_id = $vendor_id") or die (mysql_error());
+    mysqli_query($link, "update vendor_photo set dorder = '$dorder' where $vendor_photo_id = '$vendor_photo_id' and vendor_id = $vendor_id") or die (mysqli_error());
 
   }
 }

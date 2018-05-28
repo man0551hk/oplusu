@@ -1,7 +1,5 @@
 <?php
 include("interface1.php");
-?>
-<?php
 
   $categoryIDArray = $galleryCategoryClass->ReturnCategroyID();
   for($i= 0; $i < sizeof($categoryIDArray); $i++)
@@ -26,11 +24,10 @@ include("interface1.php");
     $allowInsert = false;
   }
 
-
   if($allowInsert == true)
   {
     $set_id = $galleryCategoryClass->InsertCategory();
-
+    echo $set_id;
     for($i =  0; $i< sizeof($langIDArray); $i++)
     {
       if(isset($_POST["newCategory".$langIDArray[$i]]) )

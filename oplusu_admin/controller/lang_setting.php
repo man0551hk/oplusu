@@ -33,7 +33,7 @@ class LangClass
   {
     $link = $this->Connection->ConnectDB();
     $sql = "update lang_setting set lang_code = '$lang_code', display_name = '$display_name', open = '$open' where lang_id = '$lang_id'";
-    $result = mysqli_query($link, $sql) or die(mysql_error());
+    $result = mysqli_query($link, $sql) or die(mysqli_error());
     return $open;
   }
 
@@ -52,7 +52,7 @@ class LangClass
 
     if(strlen($lang_code) <= 2)
     {
-      $result = mysqli_query($link, "select lang_id from lang_setting where lang_code = '$lang_code'") or die(mysql_error());
+      $result = mysqli_query($link, "select lang_id from lang_setting where lang_code = '$lang_code'") or die(mysqli_error());
       $lang_id = mysqli_fetch_object($result)->lang_id;
     }
 
@@ -69,7 +69,7 @@ class LangClass
     $link = $this->Connection->ConnectDB();
     $returnRow = '';
 
-    $result = mysqli_query($link, "select * from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select * from lang_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       if($row["lang_id"] == $lang_id)
@@ -89,7 +89,7 @@ class LangClass
   {
     $link = $this->Connection->ConnectDB();
     $langIDArray = Array();
-    $result = mysqli_query($link, "select lang_id from lang_setting") or die (mysql_error());
+    $result = mysqli_query($link, "select lang_id from lang_setting") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $langIDArray[] = $row["lang_id"];
@@ -101,7 +101,7 @@ class LangClass
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select lang_code from lang_setting where lang_id = '$currLang_id'") or die (mysql_error());
+    $result = mysqli_query($link, "select lang_code from lang_setting where lang_id = '$currLang_id'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow = $row["lang_code"];

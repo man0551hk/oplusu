@@ -12,13 +12,13 @@ class ContactInfoClass
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
 
-    $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysql_error());
+    $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr><td>' . $row["display_name"] . ' - Address</td><td><input type = "text" name = "address_'. $row["lang_id"] .'" value = "'.$row["address"].'" class = "form-control"/></td></tr>';
     }
 
-    $result = mysqli_query($link, "select * from contact") or die(mysql_error());
+    $result = mysqli_query($link, "select * from contact") or die(mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $resultRow .= '<tr><td>Contact Email</td><td><input type = "text" name = "email" value = "'.$row["email"].'" class = "form-control"/></td></tr>';
@@ -33,22 +33,22 @@ class ContactInfoClass
   function SaveAddress()
   {
     $link = $this->Connection->ConnectDB();
-    $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysql_error());
+    $result = mysqli_query($link, "select l.display_name, l.lang_id, a.address from lang_setting l left outer join address a on l.lang_id = a.lang_id") or die(mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $lang_id = $row["lang_id"];
       $address = $_POST['address_'. $lang_id];
       $address = str_replace("'","\'", $address);
 
-      $checkIsExist = mysqli_query($link, "select * from address where lang_id = '$lang_id'") or die(mysql_error());
+      $checkIsExist = mysqli_query($link, "select * from address where lang_id = '$lang_id'") or die(mysqli_error());
           if(mysqli_fetch_array($checkIsExist) == false) // insert
           {
-            $insertSql = mysqli_query($link, "insert into address (address, lang_id) values ('$address', $lang_id)") or die (mysql_error());
+            $insertSql = mysqli_query($link, "insert into address (address, lang_id) values ('$address', $lang_id)") or die (mysqli_error());
             mysqli_query($insertSql);
           }
           else //update
           {
-            $updateSql = mysqli_query($link, "update address set address = '$address' where lang_id = $lang_id") or die (mysql_error());
+            $updateSql = mysqli_query($link, "update address set address = '$address' where lang_id = $lang_id") or die (mysqli_error());
             mysqli_query($updateSql);
           }
 
@@ -59,7 +59,7 @@ class ContactInfoClass
   {
     $link = $this->Connection->ConnectDB();
     $sql = "update contact set email = '$email', phone = '$phone', email2 = '$email2', lat = '$lat', lon = '$lon'";
-    mysqli_query($link, $sql) or die(mysql_error());
+    mysqli_query($link, $sql) or die(mysqli_error());
     return $lon;
   }
 
@@ -76,7 +76,7 @@ class ContactInfoClass
     $result = mysqli_query($link, "select address from address where lang_id = '$currLang_id'");
     $address = mysqli_fetch_object($result)->address;
 
-    $result = mysqli_query($link, "select * from contact") or die(mysql_error());
+    $result = mysqli_query($link, "select * from contact") or die(mysqli_error());
     if($row = mysqli_fetch_array($result))
     {
       $email =  $row["email"];
