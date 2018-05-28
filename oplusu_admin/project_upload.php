@@ -34,7 +34,7 @@ if($_POST['image_form_submit'] == 1)
 		$newImage_name = $galleryClass->GetProjectPhotoID().'.'.$ext;
 		$target_file = $target_dir.'/'.$newImage_name;
     $savePath = $save_dir.'/'.$newImage_name;
-
+	
 		if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$target_file))
     {
 			if($filesize > 5242880)
@@ -52,7 +52,10 @@ if($_POST['image_form_submit'] == 1)
 				$images_arr[] = $target_file;
 				$galleryClass->SaveProjectPhoto($savePath, $project_id);
 			}
-
+		}
+		else 
+		{
+			$result = 'faile here '.	$image_name . ' ' . $tmp_name . ' ' .$filesize;
 		}
 	}
 

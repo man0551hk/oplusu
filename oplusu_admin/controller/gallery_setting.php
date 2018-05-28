@@ -58,8 +58,8 @@ class GalleryClass
     $photo = 1;
     $result = mysqli_query($link, 'select max(project_photo_id) as photo_id from project_photo') or die (mysqli_error());
     $value = mysqli_fetch_object($result);
-    $photo = $value->photo_id + 1;
-    return $photo;
+    return $value->photo_id + 1;
+    //return $photo;
   }
 
   function SaveProjectPhoto($filePath, $project_id)
