@@ -35,27 +35,34 @@ if($_POST['image_form_submit'] == 1)
 		$target_file = $target_dir.'/'.$newImage_name;
     $savePath = $save_dir.'/'.$newImage_name;
 	
-		if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$target_file))
-    {
-			if($filesize > 5242880)
-			{
-				$result .= '<font color = "red">Failed: '.$image_name." file size larger than 5MB</font><br/>";
-				unlink($target_file);
-			}
-			else {
-				$size = getimagesize($target_file);
-				if ($size[0] > 1140)
-				{
-			  	$homeClass->createThumbnail($newImage_name,1140,641,$target_dir,$target_dir);
-				}
-
-				$images_arr[] = $target_file;
-				$galleryClass->SaveProjectPhoto($savePath, $project_id);
-			}
+		if (isset($error))
+		{
+			$result = $error;
 		}
 		else 
 		{
-			$result = 'faile here '.	$image_name . ' ' . $tmp_name . ' ' .$filesize;
+			if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$target_file))
+			{
+				if($filesize > 5242880)
+				{
+					$result .= '<font color = "red">Failed: '.$image_name." file size larger than 5MB</font><br/>";
+					unlink($target_file);
+				}
+				else {
+					$size = getimagesize($target_file);
+					if ($size[0] > 1140)
+					{
+						$homeClass->createThumbnail($newImage_name,1140,641,$target_dir,$target_dir);
+					}
+
+					$images_arr[] = $target_file;
+					$galleryClass->SaveProjectPhoto($savePath, $project_id);
+				}
+			}
+			else 
+			{
+				$result = 'faile here '.	$image_name . ' ' . $tmp_name . ' ' .$filesize;
+			}
 		}
 	}
 

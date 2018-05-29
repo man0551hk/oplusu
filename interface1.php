@@ -118,7 +118,7 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
               <div class="main-menu">
                   <ul class="nav navbar-nav navbar-right">
                       <?php
-                        print $menuClass->GetFrontEndMenu($currLang_id);
+                        print $menuClass->GetFrontEndMenu($currLang_id, $langClass);
                       ?>
                   </ul>
               </div>

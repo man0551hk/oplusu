@@ -5,10 +5,10 @@ include("interface1.php");
 <link rel="stylesheet" href="/color1/js/vendor/isotope/css/styles.css">
 <script src="/color1/js/vendor/isotope/js/isotope.min.js"></script>
 <script src="/color1/js/vendor/isotope/js/main.js"></script>
-<!-- <section class="filter-section">
+<section class="filter-section">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-xs-12">
+            <!-- <div class="col-sm-12 col-xs-12">
             		<div class="filter-container isotopeFilters">
                     <ul class="list-inline filter">
                         <li class="active"><a href="#" data-filter="*">
@@ -41,17 +41,17 @@ include("interface1.php");
                     </ul>
                 </div>
 
-            </div>
+            </div> -->
         </div>
     </div>
-</section> -->
+</section>
 
 <section class="portfolio-section port-col">
     <div class="container">
         <div class="row">
             <div class="isotopeContainer wow fadeInUp animated" data-wow-duration="100ms" data-wow-delay="0.3s">
 
-                <?php echo $galleryClass->GetProject($currLang_id);?>
+                <?php echo $galleryClass->GetProject($currLang_id, $langClass);?>
             </div>
         </div>
     </div>

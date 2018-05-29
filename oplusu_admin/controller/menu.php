@@ -163,14 +163,14 @@ class MenuClass
   }
 
 
-  function GetFrontEndMenu($currLang_id)
+  function GetFrontEndMenu($currLang_id, $langClass)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $sql = "select url, name from menu where lang_id = '$currLang_id' and status = 1 order by id";
     if($_GET["allprojectson"] == "1")
     {
-      $sql = "select url, name from menu where lang_id = '$currLang_id' and (status = 1 or url = 'gallery.php') order by id";
+      $sql = "select url, name from menu where lang_id = '$currLang_id' and (status = 1 or url = 'project.php') order by id";
     }
 
     $result = mysqli_query($link, $sql) or die (mysqli_error());
@@ -178,7 +178,7 @@ class MenuClass
     {
       if($currLang_id != 1)
       {
-        $langClass = new LangClass();
+        
         $lang_code = strtolower($langClass->GetLangCode($currLang_id));
         if($_GET["allprojectson"] == "1")
         {

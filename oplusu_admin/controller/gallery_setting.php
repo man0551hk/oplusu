@@ -260,7 +260,7 @@ class GalleryClass
     mysqli_query($link, "update project_section set content = '$content' where project_section_id = '$project_section_id'") or die (mysqli_error());
   }
 
-  function GetProject($currLang_ID)
+  function GetProject($currLang_ID, $langClass)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
@@ -284,16 +284,13 @@ class GalleryClass
         $resultRow .= '<div class="col-sm-4 col-xs-12 isotopeSelector '.$set_id.'">';
             $resultRow .= '<article class="">';
                 $resultRow .= '<figure>';
-
-
-
                     $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysqli_error());
                     $firstPhoto = mysqli_fetch_object($resultFirstPhoto)->photo_path;
                     //$resultRow .= '<a href = "project_detail.php?project_id='.$project_id.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
 
                     if($currLang_ID != 1)
                     {
-                      $langClass = new LangClass();
+                      
                       $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
                       if($_GET["allprojectson"] == 1)
                       {
@@ -320,7 +317,7 @@ class GalleryClass
 
                 if($currLang_ID != 1)
                 {
-                  $langClass = new LangClass();
+                  
                   $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
                   if($_GET["allprojectson"] == 1)
                   {
@@ -376,7 +373,7 @@ class GalleryClass
 
     $statusRs = mysqli_query($link, "select project_id from project where project_id = '$project_id' and status = 1") or die(mysqli_error());
     $status = mysqli_fetch_object($statusRs)->project_id;
-
+  
     $allow = false;
     if($status > 0)
     {
@@ -388,7 +385,7 @@ class GalleryClass
       $allow = true;
     }
 
-
+    
 
     if($allow)
     {

@@ -14,6 +14,12 @@ if(isset($_GET["project_id"]) || isset($_GET["project"]))
 
   $resultSet = $galleryClass->GalleryDetail($currLang_id, $project_id);
 
+  if($_GET["allprojectson"] == "1")
+  {
+    echo "a";
+  }
+
+
   if(sizeof($resultSet) == 0)
   {
     ?>
