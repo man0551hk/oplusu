@@ -1,20 +1,20 @@
 <?php
 include("interface1.php");
 
-if(isset($_GET["project_id"]) || isset($_GET["project"]))
+if(isset($_GET["vendor_id"]) || isset($_GET["project"]))
 {
 
-  if(isset($_GET["project_id"]))
+  if(isset($_GET["vendor_id"]))
   {
-    $project_id = $_GET["project_id"];
+    $vendor_id = $_GET["vendor_id"];
   }
   else {
-    $project_id = $galleryClass->ProjectSEOPath($_GET["project"]);
+    $vendor_id = $vendorClass->VendorSEOPath($_GET["project"]);
   }
 
-  $resultSet = $galleryClass->GalleryDetail($currLang_id, $project_id);
+  $resultSet = $vendorClass->VendorDetail($currLang_id, $vendor_id);
 
-  if($_GET["allprojectson"] == "1")
+  if($_GET["allvendorson"] == "1")
   {
     //echo "a";
   }

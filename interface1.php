@@ -88,10 +88,10 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
             s.type = 'text/javascript';
             s.async = true;
             s.src = ('https:' == document.location.protocol ? 'https://s' : 'http://i')
-              + '.po.st/static/v4/post-widget.js#publisherKey=n3r2esk4q4ko7c6rvhu7';
+            + '.po.st/static/v4/post-widget.js#publisherKey=g9agm7u6al0m18m1mpqi';
             var x = document.getElementsByTagName('script')[0];
             x.parentNode.insertBefore(s, x);
-         })();
+        })();
     </script>
 </head>
 <body>

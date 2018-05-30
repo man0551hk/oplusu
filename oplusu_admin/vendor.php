@@ -14,7 +14,7 @@ include("interface1.php");
             {
               $set_id = $_POST["set_id"];
             }
-            echo $vendorCategoryClass->ReturnCategroyDropDown($set_id);
+            echo $vendorCategoryClass->ReturnVendorCategroyDropDown($set_id);
           ?>
         </select>
         <input type = "submit" value="Search" class="btn btn-primary"/>

@@ -3,7 +3,7 @@ include("interface1.php");
 ?>
 <?php
 
-  $categoryIDArray = $vendorCategoryClass->ReturnCategroyID();
+  $categoryIDArray = $vendorCategoryClass->ReturnVendorCategroyID();
   for($i= 0; $i < sizeof($categoryIDArray); $i++)
   {
     $editcategory = $_POST["editcategory".$categoryIDArray[$i]];
@@ -25,7 +25,7 @@ include("interface1.php");
   {
     $allowInsert = false;
   }
-
+  echo "<script>console.log('".$allowInsert."');</script>";
 
   if($allowInsert == true)
   {

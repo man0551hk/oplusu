@@ -45,11 +45,14 @@ class VendorClass
     $newOrder = $value->newOrder + 1;
 
     $result = mysqli_query($link, "insert into vendor (set_id, dorder, status) values ('$set_id', '$newOrder', 0)") or die (mysqli_error());
+    echo "<script>console.log('aasa');</script>"; 
     $vendor_id = mysqli_insert_id($link);
 
+    echo "<script>console.log('".$vendor_id."');</script>";
     $result = mysqli_query($link, "insert into vendor_title (vendor_title, vendor_id, lang_id) select '', '$vendor_id', lang_id from lang_setting") or die (mysqli_error());
 
     return $vendor_id;
+
   }
 
   function GetVendorPhotoID()
@@ -172,7 +175,7 @@ class VendorClass
       $resultRow .= '<div class = "row">';
       $resultRow .= '<div class = "col-md-12">';
       $resultRow .= '<h3>Section_ID: '.$section_set_id.'</h3>';
-      $resultRow .= '<a href = "delete_section_set.php?section_set_id='.$section_set_id.'&set_id='.$set_id.'&vendor_id='.$vendor_id.'" class="btn btn-danger">Delete</a>';
+      $resultRow .= '<a href = "delete_vendor_set.php?section_set_id='.$section_set_id.'&set_id='.$set_id.'&vendor_id='.$vendor_id.'" class="btn btn-danger">Delete</a>';
       $resultRow .= '</div>';
       $resultRow .= '</div>';
 
@@ -239,11 +242,13 @@ class VendorClass
     return mysqli_insert_id($link);
   }
 
-  function DeleteSection($section_set_id)
+  function DeleteVendorSection($section_set_id)
   {
+    echo "<script>console.log('".$section_set_id."');</script>";
     $link = $this->Connection->ConnectDB();
-    mysqli_query($link, "delete from vendor_section where section_set_id = '.$section_set_id.'") or die (mysqli_error());
-    mysqli_query($link, "delete from vendor_section_set where section_set_id = '.$section_set_id.'") or die (mysqli_error());
+    mysqli_query($link, "delete from vendor_section_set where section_set_id = '$section_set_id'") or die (mysqli_error());
+    mysqli_query($link, "delete from vendor_section where section_set_id = '$section_set_id'") or die (mysqli_error());
+
   }
 
   function InsertVendorSection($content, $vendor_id, $section_set_id, $lang_id)
