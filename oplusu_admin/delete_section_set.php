@@ -5,6 +5,8 @@ if(isset($_GET["section_set_id"]) && isset($_GET["set_id"]) && isset($_GET["proj
 {
   $set_id = $_GET["set_id"];
   $project_id = $_GET["project_id"];
+  $section_set_id = $_GET["section_set_id"];
+  $galleryClass->DeleteSection($section_set_id);
 
 ?>
 <script>

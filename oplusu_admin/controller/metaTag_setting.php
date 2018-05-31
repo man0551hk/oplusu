@@ -76,6 +76,18 @@ class MetaTagClass
     return $project_title;
   }
 
+  function GetVendorTitle($currLang_id, $project_id)
+  {
+    $link = $this->Connection->ConnectDB();
+    $project_title = '';
+    $result = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$project_id' and lang_id = '$currLang_id'") or die (mysqli_error());
+    if($row  = mysqli_fetch_array($result))
+    {
+      $project_title = $row["vendor_title"];
+    }
+    return $project_title;
+  }
+
   function GetNewsTitle($news_id)
   {
     $link = $this->Connection->ConnectDB();

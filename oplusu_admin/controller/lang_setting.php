@@ -41,9 +41,9 @@ class LangClass
   {
     $link = $this->Connection->ConnectDB();
     $lang_id = '';
-    $lang_code = 'EN'; //default
+    $lang_code = 'ZH'; //default
     if(!isset($_COOKIE['lang'])) {
-      $this->SaveCookieLang('EN'); //default
+      $this->SaveCookieLang('ZH'); //default
     }
     else {
       $this->SaveCookieLang($_COOKIE['lang']);

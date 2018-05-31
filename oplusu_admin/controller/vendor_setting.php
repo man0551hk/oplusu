@@ -265,7 +265,7 @@ class VendorClass
     mysqli_query($link, "update vendor_section set content = '$content' where vendor_section_id = '$vendor_section_id'") or die (mysqli_error());
   }
 
-  function GetVendor($currLang_ID)
+  function GetVendor($currLang_ID, $langClass)
   {
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
@@ -274,7 +274,7 @@ class VendorClass
     {
       $set_id = $row["set_id"];
 
-      if($_GET["allvendorson"] == 1)
+      if($_GET["allVendorson"] == 1)
       {
         $result2 = mysqli_query($link, "select vendor_id, seopath from vendor where set_id = '$set_id' order by dorder")  or die (mysqli_error());
       }
@@ -296,26 +296,25 @@ class VendorClass
                     $firstPhoto = mysqli_fetch_object($resultFirstPhoto)->photo_path;
                     //$resultRow .= '<a href = "vendor_detail.php?vendor_id='.$vendor_id.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
 
-                    if($currLang_ID != 1)
+                    if($currLang_ID != 2)
                     {
-                      $langClass = new LangClass();
                       $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
-                      if($_GET["allvendorson"] == 1)
+                      if($_GET["allVendorson"] == 1)
                       {
-                        $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allvendorson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allVendorson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
 
                     }
                     else {
-                      if($_GET["allvendorson"] == 1)
+                      if($_GET["allVendorson"] == 1)
                       {
-                        $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&allvendorson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&allVendorson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/vendor/'.$seopath.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/vendor/'.$seopath.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                     }
                 $resultRow .= '</figure>';
@@ -323,26 +322,25 @@ class VendorClass
                 $resultTitle = mysqli_query($link, "select vendor_title from vendor_title where vendor_id = '$vendor_id' and lang_id = '$currLang_ID'") or die (mysqli_error());
                 $resultRow .= '<div class="article-title">';
 
-                if($currLang_ID != 1)
+                if($currLang_ID != 2)
                 {
-                  $langClass = new LangClass();
                   $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
-                  if($_GET["allvendorson"] == 1)
+                  if($_GET["allVendorson"] == 1)
                   {
-                    $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allvendorson=1">';
+                    $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allVendorson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'">';
+                    $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'/">';
                   }
 
                 }
                 else {
-                  if($_GET["allvendorson"] == 1)
+                  if($_GET["allVendorson"] == 1)
                   {
-                    $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&allvendorson=1">';
+                    $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&allVendorson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/vendor/'.$seopath.'">';
+                    $resultRow .= '<a href = "/vendor/'.$seopath.'/">';
                   }
                 }
 
@@ -388,7 +386,7 @@ class VendorClass
       $allow = true;
     }
 
-    if($_GET["allvendorson"] == "1")
+    if($_GET["allVendorson"] == "1")
     {
       $allow = true;
     }
@@ -477,6 +475,7 @@ class VendorClass
 
   function VendorSEOPath($seopath)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select vendor_id from vendor where seopath = '$seopath'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))

@@ -1,7 +1,7 @@
 <?php
 include("interface1.php");
 
-if(isset($_GET["vendor_id"]) || isset($_GET["project"]))
+if(isset($_GET["vendor_id"]) || isset($_GET["vendor"]))
 {
 
   if(isset($_GET["vendor_id"]))
@@ -9,12 +9,12 @@ if(isset($_GET["vendor_id"]) || isset($_GET["project"]))
     $vendor_id = $_GET["vendor_id"];
   }
   else {
-    $vendor_id = $vendorClass->VendorSEOPath($_GET["project"]);
+    $vendor_id = $vendorClass->VendorSEOPath($_GET["vendor"]);
   }
 
   $resultSet = $vendorClass->VendorDetail($currLang_id, $vendor_id);
 
-  if($_GET["allvendorson"] == "1")
+  if($_GET["allVendorson"] == "1")
   {
     //echo "a";
   }

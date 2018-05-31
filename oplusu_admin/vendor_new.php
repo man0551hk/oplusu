@@ -72,7 +72,7 @@ ul, ol, li {
 <div class="panel panel-default">
   <div class="panel-heading">vendor Setting</div>
     <div class="panel-body">
-      <a href = "http://www.oplusu.net/vendor_detail.php?vendor_id=<?php echo $vendor_id?>&allvendorson=1" target = "_blank">Preview Link</a>
+      <a href = "http://www.oplusu.net/vendor_detail.php?vendor_id=<?php echo $vendor_id?>&allVendorson=1" target = "_blank">Preview Link</a>
       <form action = "vendor_publish.php" method = "post">
         <input type = "hidden" name = "vendor_id" value = "<?php echo $vendor_id?>"/>
         <input type = "hidden" name = "set_id" value = "<?php echo $set_id?>"/>

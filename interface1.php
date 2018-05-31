@@ -25,6 +25,17 @@ if(isset($_GET["project_id"]) || isset($_GET["project"]) )
   }
   $project_title = $metaTagClass->GetProjectTitle($currLang_id, $project_id).' | ';
 }
+if(isset($_GET["vendor_id"]) || isset($_GET["vendor"]) )
+{
+  if(isset($_GET["vendor_id"]))
+  {
+    $vendor_id = $_GET["vendor_id"];
+  }
+  else {
+    $vendor_id = $vendorClass->VendorSEOPath($_GET["vendor"]);
+  }
+  $project_title = $metaTagClass->GetVendorTitle($currLang_id, $vendor_id).' | ';
+}
 if(isset($_GET["news_id"]))
 {
   $news_title = $metaTagClass->GetNewsTitle($_GET["news_id"]).' | ';

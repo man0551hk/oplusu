@@ -288,7 +288,7 @@ class GalleryClass
                     $firstPhoto = mysqli_fetch_object($resultFirstPhoto)->photo_path;
                     //$resultRow .= '<a href = "project_detail.php?project_id='.$project_id.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
 
-                    if($currLang_ID != 1)
+                    if($currLang_ID != 2)
                     {
                       
                       $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
@@ -297,7 +297,7 @@ class GalleryClass
                         $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&lang='.$lang_code.'&allprojectson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
 
                     }
@@ -307,7 +307,7 @@ class GalleryClass
                         $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&allprojectson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/project/'.$seopath.'"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/project/'.$seopath.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                     }
                 $resultRow .= '</figure>';
@@ -315,7 +315,7 @@ class GalleryClass
                 $resultTitle = mysqli_query($link, "select project_title from project_title where project_id = '$project_id' and lang_id = '$currLang_ID'") or die (mysqli_error());
                 $resultRow .= '<div class="article-title">';
 
-                if($currLang_ID != 1)
+                if($currLang_ID != 2)
                 {
                   
                   $lang_code = strtolower($langClass->GetLangCode($currLang_ID));
@@ -324,7 +324,7 @@ class GalleryClass
                     $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&lang='.$lang_code.'&allprojectson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'">';
+                    $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'/">';
                   }
 
                 }
@@ -334,7 +334,7 @@ class GalleryClass
                     $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&allprojectson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/project/'.$seopath.'">';
+                    $resultRow .= '<a href = "/project/'.$seopath.'/">';
                   }
                 }
 
@@ -469,6 +469,7 @@ class GalleryClass
 
   function ProjectSEOPath($seopath)
   {
+    $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select project_id from project where seopath = '$seopath'") or die (mysqli_error());
     if($row = mysqli_fetch_array($result))

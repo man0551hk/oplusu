@@ -9,7 +9,7 @@ include("interface1.php");
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-xs-12">
-            		<div class="filter-container isotopeFilters">
+            	<!-- <div class="filter-container isotopeFilters">
                     <ul class="list-inline filter">
                         <li class="active"><a href="#" data-filter="*">
                           <?php
@@ -39,7 +39,7 @@ include("interface1.php");
                           echo $vendorCategoryClass->VendorCategory($currLang_id);
                         ?>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -50,8 +50,7 @@ include("interface1.php");
     <div class="container">
         <div class="row">
             <div class="isotopeContainer wow fadeInUp animated" data-wow-duration="100ms" data-wow-delay="0.3s">
-
-                <?php echo $vendorClass->GetVendor($currLang_id);?>
+                <?php echo $vendorClass->GetVendor($currLang_id, $langClass);?>
             </div>
         </div>
     </div>

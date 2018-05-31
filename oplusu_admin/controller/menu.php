@@ -176,7 +176,7 @@ class MenuClass
     $result = mysqli_query($link, $sql) or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
-      if($currLang_id != 1)
+      if($currLang_id != 2) // 2 is default
       {
         
         $lang_code = strtolower($langClass->GetLangCode($currLang_id));
@@ -191,11 +191,11 @@ class MenuClass
       else {
         if($_GET["allprojectson"] == "1")
         {
-          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'?allprojectson=1">'.$row["name"].'</a></li>';
+          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'/?allprojectson=1">'.$row["name"].'</a></li>';
 
         }
         else {
-          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'">'.$row["name"].'</a></li>';
+          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'/">'.$row["name"].'</a></li>';
         }
       }
 
