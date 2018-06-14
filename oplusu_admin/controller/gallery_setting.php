@@ -281,7 +281,7 @@ class GalleryClass
       {
         $project_id = $row2["project_id"];
         $seopath = $row2["seopath"];
-        $resultRow .= '<div class="col-sm-4 col-xs-12 isotopeSelector '.$set_id.'">';
+        $resultRow .= '<div class="col-sm-3 col-xs-12 isotopeSelector '.$set_id.'">';
             $resultRow .= '<article class="">';
                 $resultRow .= '<figure>';
                     $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysqli_error());
