@@ -47,7 +47,7 @@ else if($currLang_id == 5)
 
 
 <section id="contact-section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
                <div class="map-area">
@@ -81,7 +81,9 @@ else if($currLang_id == 5)
           </div>
           <div class="col-md-3">
               <div class="phone wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".9s">
-                  <i class="ion-ios-people-outline"></i>
+                  <!-- <i class="ion-ios-people-outline"></i> -->
+                  <img src = "http://www.oplusu.net/color1/images/tomatojoiner.jpeg" />
+                  <br/><br/>
                   <p><?php echo $contact[3];?><br>&nbsp;<br>&nbsp;</p>
               </div>
           </div>
