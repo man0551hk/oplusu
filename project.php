@@ -6,7 +6,7 @@ include("interface1.php");
 <script src="/color1/js/vendor/isotope/js/isotope.min.js"></script>
 <script src="/color1/js/vendor/isotope/js/main.js"></script>
 <section class="filter-section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!-- <div class="col-sm-12 col-xs-12">
             		<div class="filter-container isotopeFilters">
@@ -47,7 +47,7 @@ include("interface1.php");
 </section>
 
 <section class="portfolio-section port-col">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="isotopeContainer wow fadeInUp animated" data-wow-duration="100ms" data-wow-delay="0.3s">
 

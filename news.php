@@ -12,7 +12,7 @@ include 'oplusu_admin/controller/news_setting.php';
 </script>
 
 <section id="works" class="works">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row masonry">
           <?php
             echo $newsClass->GetNews($currLang_id);

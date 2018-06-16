@@ -9,7 +9,7 @@ if(isset($_GET["news_id"]))
 }
 ?>
 <section class="single-post">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="post-img">

@@ -1,5 +1,5 @@
 <footer id="footer">
-    <div class="container">
+    <div class="-fluid">
         <div class="col-md-8">
 
         </div>

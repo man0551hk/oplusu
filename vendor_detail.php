@@ -28,11 +28,11 @@ if(isset($_GET["vendor_id"]) || isset($_GET["vendor"]))
   }
 ?>
 <section class="single-post">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
         <div class="post-img">
-          <div class="container">
+          <div class="container-fluid">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
               <div class="carousel-inner">
@@ -43,7 +43,7 @@ if(isset($_GET["vendor_id"]) || isset($_GET["vendor"]))
             </div>
           </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
           <div class="post-content">
           <div class="pw-server-widget" data-id="wid-89iau5mf"></div>
             <?php echo $resultSet[2];?>
