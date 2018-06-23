@@ -286,7 +286,7 @@ class VendorClass
       {
         $vendor_id = $row2["vendor_id"];
         $seopath = $row2["seopath"];
-        $resultRow .= '<div class="col-sm-4 col-xs-12 isotopeSelector '.$set_id.'">';
+        $resultRow .= '<div class="col-sm-3 col-xs-12 isotopeSelector '.$set_id.'">';
             $resultRow .= '<article class="">';
                 $resultRow .= '<figure>';
 
