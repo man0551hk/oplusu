@@ -9,27 +9,27 @@ function SetCookieLang(lang_code, page)
   var parameter = location.search;
   page = page.replace(parameter, "");
 
+  var redirect = page.replace(parameter, "").replace("/zh/", "").replace("/en/", "").replace("/cn/", "").replace("/jp/", "").replace("/it/", "").replace("/zh", "").replace("/cn", "").replace("/jp", "").replace("/it", "");
 
-  var redirect = page.replace(parameter, "").replace("/zh/", "").replace("/cn/", "").replace("/jp/", "").replace("/it/", "").replace("/zh", "").replace("/cn", "").replace("/jp", "").replace("/it", "");
-  redirect = redirect.replace("//", "/");
   if(redirect == "/" || redirect == "")
   {
     redirect = "http://www.oplusu.net";
   }
 
-  console.log(lang_code);
   if(lang_code.toLowerCase() != "zh")
   {
-    //window.location = redirect + "/" + lang_code.toLowerCase() + parameter;
-    redirect +=  lang_code.toLowerCase() + parameter;
-    
+    redirect =  lang_code.toLowerCase() + "/" + redirect + "/" + parameter;
   }
   else
   {
-    //window.location = redirect + parameter;
     redirect = redirect + parameter;
   }
-  redirect = redirect.replace("//", "/");
-  //window.location =redirect;
+  redirect = redirect.replace(/\/\//g, "/");
+  if (redirect.indexOf("http://www.oplusu.net") === -1)
+  {
+    redirect = "http://www.oplusu.net/" + redirect;
+  }
+  
   //console.log(redirect);
+  window.location = redirect;
 }

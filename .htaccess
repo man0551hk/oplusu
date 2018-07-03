@@ -1,17 +1,29 @@
 RewriteEngine On
-RewriteRule ^project/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /color1/project_detail.php?project=$1 [NC,L]
-RewriteRule ^project/([A-Za-z0-9-]+)/?$  /color1/project_detail.php?project=$1 [NC,L]
-RewriteRule ^vendor/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /color1/vendor_detail.php?vendor=$1 [NC,L]
-RewriteRule ^vendor/([A-Za-z0-9-]+)/?$  /color1/vendor_detail.php?vendor=$1 [NC,L]
-RewriteRule ^news-article/([0-9]+)/([A-Za-z0-9-]+)/?$ /color/news_detail.php?news_id=$1 [NC,L]
-RewriteRule ^news-article/([0-9]+)/?$ /color1/news_detail.php?news_id=$1 [NC,L]
-RewriteRule ^news-article/([A-Za-z0-9-]+)/?$ /color1/news.php [NC,L]
-RewriteRule ^project/?$  /color1/project.php
-RewriteRule ^vendor/?$  /color1/vendor.php
-RewriteRule ^news-article/?$ /color1/news.php
-RewriteRule ^about/?$ /color1/about.php
-RewriteRule ^contact/?$ /color1/contact.php
-RewriteRule ^([A-Za-z0-9-]+)/?$ /color1/index.php
-#RewriteRule index.php http://www.bcd-intl.com [L,R=301]
-#RewriteCond %{HTTP_HOST} !^bcd-intl.com$ [NC]
-#RewriteRule ^$ http://www.bcd-intl.com [L,R=301]
+RewriteRule ^project/([A-Za-z0-9-]+)/?$  /project_detail.php?project=$1 [NC,L]
+RewriteRule ^([A-Za-z0-9-]+)/project/([A-Za-z0-9-]+)/?$  /project_detail.php?project=$2 [NC,L]
+
+RewriteRule ^vendor/([A-Za-z0-9-]+)/?$  /vendor_detail.php?vendor=$1 [NC,L]
+RewriteRule ^([A-Za-z0-9-]+)/vendor/([A-Za-z0-9-]+)/?$  /vendor_detail.php?vendor=$2 [NC,L]
+
+RewriteRule ^news-article/([0-9]+)/?$ /news_detail.php?news_id=$1 [NC,L]
+RewriteRule ^([A-Za-z0-9-]+)/news-article/([0-9]+)/?$ /news_detail.php?news_id=$2 [NC,L]
+
+RewriteRule ^news-article/?$ /news.php [NC,L]
+RewriteRule ^([A-Za-z0-9-]+)/news-article/?$ /news.php [NC,L]
+
+RewriteRule ^project/?$  /project.php
+RewriteRule ^([A-Za-z0-9-]+)/project/?$  /project.php
+
+RewriteRule ^vendor/?$  /vendor.php
+RewriteRule ^([A-Za-z0-9-]+)/vendor/?$  /vendor.php
+
+RewriteRule ^about/?$ /about.php
+RewriteRule ^([A-Za-z0-9-]+)/about/?$ /about.php
+
+RewriteRule ^contact/?$ /contact.php
+RewriteRule ^([A-Za-z0-9-]+)/contact/?$ /contact.php
+
+#RewriteRule ^([A-Za-z0-9-]+)/?$ /index.php
+#RewriteRule index.php http://www.oplusu.net [L,R=301]
+#RewriteCond %{HTTP_HOST} !^oplusu.net$ [NC]
+#RewriteRule ^$ http://www.oplusu.net [L,R=301]

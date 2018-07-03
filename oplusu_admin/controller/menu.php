@@ -182,10 +182,10 @@ class MenuClass
         $lang_code = strtolower($langClass->GetLangCode($currLang_id));
         if($_GET["allprojectson"] == "1")
         {
-          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'/'.$lang_code.'?allprojectson=1">'.$row["name"].'</a></li>';
+          $resultRow .= '<li><a href="/'.$lang_code.str_replace(".php", "", $row["url"]).'/?allprojectson=1">'.$row["name"].'</a></li>';
         }
         else {
-          $resultRow .= '<li><a href="/'.str_replace(".php", "", $row["url"]).'/'.$lang_code.'">'.$row["name"].'</a></li>';
+          $resultRow .= '<li><a href="/'.$lang_code.'/'.str_replace(".php", "", $row["url"]).'/">'.$row["name"].'</a></li>';
         }
       }
       else {

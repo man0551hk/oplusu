@@ -1,6 +1,6 @@
 <?php
 include 'interface1.php';
-include '../oplusu_admin/controller/about_setting.php';
+include './oplusu_admin/controller/about_setting.php';
 ?>
 <section class="company-description">
     <div class="container-fluid">

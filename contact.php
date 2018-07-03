@@ -1,6 +1,6 @@
 <?php
 include 'interface1.php';
-include '../oplusu_admin/controller/contactInfo_setting.php';
+include './oplusu_admin/controller/contactInfo_setting.php';
 $contact = $ContactInfoClass->GetContact($currLang_id);
 $thislang = 'EN';
 if($currLang_id == 1)
@@ -82,7 +82,7 @@ else if($currLang_id == 5)
           <div class="col-md-3">
               <div class="phone wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".9s">
                   <!-- <i class="ion-ios-people-outline"></i> -->
-                  <img src = "http://www.oplusu.net/color1/images/tomatojoiner.jpeg" />
+                  <img src = "http://www.oplusu.net//images/tomatojoiner.jpeg" />
                   <br/><br/>
                   <p><?php echo $contact[3];?><br>&nbsp;<br>&nbsp;</p>
               </div>

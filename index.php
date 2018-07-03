@@ -1,3 +1,9 @@
+<?php 
+include './oplusu_admin/db.php';
+include './oplusu_admin/controller/lang_setting.php';
+$currLang_id = $langClass->GetCookieLang();
+$langCode = $langClass->GetLangCode($currLang_id);
+?>
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -12,30 +18,30 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/color1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/color1/css/bootstrap-touch-carousel.min.css">
-    <link rel="stylesheet" href="/color1/css/ionicons.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/animate.min.css">
-    <link rel="stylesheet" href="/color1/css/owl.carousel.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/owl.theme.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/jquery.fancybox.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/Fade.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/main.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/responsive.min.css?v1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-touch-carousel.min.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css?v1">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css?v1">
+    <link rel="stylesheet" href="/css/owl.theme.min.css?v1">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css?v1">
+    <link rel="stylesheet" href="/css/Fade.min.css?v1">
+    <link rel="stylesheet" href="/css/main.min.css?v1">
+    <link rel="stylesheet" href="/css/responsive.min.css?v1">
     <!--<link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/demo.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/slicebox.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/custom.css" />-->
 
-    <script src="/color1/js/vendor/modernizr-2.6.2.min.js?v1"></script>
+    <script src="/js/vendor/modernizr-2.6.2.min.js?v1"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/color1/js/owl.carousel.min.js?v1"></script>
-    <script src="/color1/js/bootstrap.min.js?v1"></script>
-    <script src="/color1/js/bootstrap-touch-carousel.js?v1"></script>
-    <script src="/color1/js/wow.min.js?v1"></script>
-    <script src="/color1/js/slider.js?v1"></script>
-    <script src="/color1/js/jquery.fancybox.js?v1"></script>
-    <script src="/color1/js/main.js?v1"></script>
-    <script src="/color1/js/function.js?v1" type="text/javascript"></script>
+    <script src="/js/owl.carousel.min.js?v1"></script>
+    <script src="/js/bootstrap.min.js?v1"></script>
+    <script src="/js/bootstrap-touch-carousel.js?v1"></script>
+    <script src="/js/wow.min.js?v1"></script>
+    <script src="/js/slider.js?v1"></script>
+    <script src="/js/jquery.fancybox.js?v1"></script>
+    <script src="/js/main.js?v1"></script>
+    <script src="/js/function.js?v1" type="text/javascript"></script>
     
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -71,9 +77,23 @@
 </style>
 
     <div class="container" style="height:90vh;">
-        <div class="row" style="top:40%; position:relative;">
+        <div class="row" style="top:36%; position:relative;">
             <div class="col-md-12" style="text-align:center;font-family:Century Gothic;font-size: 18em;color: #a2a3a7;text-decoration:none;">
-                <a href = '/project' >O</a> + <a href = '/vendor'>U</a>
+                <?php 
+                    if (strtolower($langCode)!= "zh")
+                    {
+                        ?>
+                            <a href = '<?php echo strtolower($langCode);?>/project/' >O</a> + <a href = '<?php echo strtolower($langCode);?>/vendor/'>U</a>
+                        <?php
+                    }
+                    else 
+                    {
+                        ?>
+                            <a href = '/project/' >O</a> + <a href = '/vendor/'>U</a>
+                        <?php
+                    }
+                ?>
+                
             </div>
         </div>
     </div>

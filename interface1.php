@@ -1,14 +1,14 @@
 <?php
-include '../oplusu_admin/db.php';
-include '../oplusu_admin/include.php';
-include '../oplusu_admin/controller/lang_setting.php';
-include '../oplusu_admin/controller/menu.php';
-include '../oplusu_admin/controller/metaTag_setting.php';
-include '../oplusu_admin/controller/social_setting.php';
-include '../oplusu_admin/controller/gallery_category_setting.php';
-include '../oplusu_admin/controller/gallery_setting.php';
-include '../oplusu_admin/controller/vendor_category_setting.php';
-include '../oplusu_admin/controller/vendor_setting.php';
+include './oplusu_admin/db.php';
+include './oplusu_admin/include.php';
+include './oplusu_admin/controller/lang_setting.php';
+include './oplusu_admin/controller/menu.php';
+include './oplusu_admin/controller/metaTag_setting.php';
+include './oplusu_admin/controller/social_setting.php';
+include './oplusu_admin/controller/gallery_category_setting.php';
+include './oplusu_admin/controller/gallery_setting.php';
+include './oplusu_admin/controller/vendor_category_setting.php';
+include './oplusu_admin/controller/vendor_setting.php';
 
 $currLang_id = $langClass->GetCookieLang();
 
@@ -48,7 +48,7 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <!-- <link rel="icon" type="image/png" href="/images/favicon.png"> -->
     <title><?php echo $project_title;?><?php echo $news_title;?><?php echo $subpage;?>O + U</title>
 
     <meta name="keywords" content="<?php echo $metaArray[0];?>">
@@ -57,30 +57,30 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/color1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/color1/css/bootstrap-touch-carousel.min.css">
-    <link rel="stylesheet" href="/color1/css/ionicons.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/animate.min.css">
-    <link rel="stylesheet" href="/color1/css/owl.carousel.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/owl.theme.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/jquery.fancybox.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/Fade.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/main.min.css?v1">
-    <link rel="stylesheet" href="/color1/css/responsive.min.css?v1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-touch-carousel.min.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css?v1">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css?v1">
+    <link rel="stylesheet" href="/css/owl.theme.min.css?v1">
+    <link rel="stylesheet" href="/css/jquery.fancybox.min.css?v1">
+    <link rel="stylesheet" href="/css/Fade.min.css?v1">
+    <link rel="stylesheet" href="/css/main.min.css?v1">
+    <link rel="stylesheet" href="/css/responsive.min.css?v1">
     <!--<link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/demo.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/slicebox.css" />
     <link rel="stylesheet" type="text/css" href="vendor/Slicebox/css/custom.css" />-->
 
-    <script src="/color1/js/vendor/modernizr-2.6.2.min.js?v1"></script>
+    <script src="/js/vendor/modernizr-2.6.2.min.js?v1"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/color1/js/owl.carousel.min.js?v1"></script>
-    <script src="/color1/js/bootstrap.min.js?v1"></script>
-    <script src="/color1/js/bootstrap-touch-carousel.js?v1"></script>
-    <script src="/color1/js/wow.min.js?v1"></script>
-    <script src="/color1/js/slider.js?v1"></script>
-    <script src="/color1/js/jquery.fancybox.js?v1"></script>
-    <script src="/color1/js/main.js?v1"></script>
-    <script src="/color1/js/function.js?v1" type="text/javascript"></script>
+    <script src="/js/owl.carousel.min.js?v1"></script>
+    <script src="/js/bootstrap.min.js?v1"></script>
+    <script src="/js/bootstrap-touch-carousel.js?v1"></script>
+    <script src="/js/wow.min.js?v1"></script>
+    <script src="/js/slider.js?v1"></script>
+    <script src="/js/jquery.fancybox.js?v1"></script>
+    <script src="/js/main.js?v1"></script>
+    <script src="/js/function.js" type="text/javascript"></script>
     
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
