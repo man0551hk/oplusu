@@ -82,7 +82,28 @@ $metaArray = $metaTagClass->GetMetaTag($currLang_id);
     <script src="/js/main.js?v1"></script>
     <script src="/js/function.js" type="text/javascript"></script>
     
+    <style>
+@media (min-width:768px) {
+    .container-fluid {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
 
+@media (min-width:992px) {
+    .container-fluid {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media (min-width:1200px) {
+    .container-fluid{
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+    </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118966689-1"></script>
     <script>
