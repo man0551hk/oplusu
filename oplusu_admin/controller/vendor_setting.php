@@ -304,7 +304,7 @@ class VendorClass
                         $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allVendorson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/'.$lang_code.'/vendor/'.$seopath.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
 
                     }
@@ -330,7 +330,7 @@ class VendorClass
                     $resultRow .= '<a href = "/vendor_detail.php?vendor_id='.$vendor_id.'&lang='.$lang_code.'&allVendorson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/vendor/'.$seopath.'/'.$lang_code.'/">';
+                    $resultRow .= '<a href = "/'.$lang_code.'/vendor/'.$seopath.'/">';
                   }
 
                 }

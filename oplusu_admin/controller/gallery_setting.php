@@ -297,7 +297,7 @@ class GalleryClass
                         $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&lang='.$lang_code.'&allprojectson=1"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
                       else {
-                        $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
+                        $resultRow .= '<a href = "/'.$lang_code.'/project/'.$seopath.'/"><img src="/'.$firstPhoto.'"  style="height:240px;" /></a>';
                       }
 
                     }
@@ -324,7 +324,7 @@ class GalleryClass
                     $resultRow .= '<a href = "/project_detail.php?project_id='.$project_id.'&lang='.$lang_code.'&allprojectson=1">';
                   }
                   else {
-                    $resultRow .= '<a href = "/project/'.$seopath.'/'.$lang_code.'/">';
+                    $resultRow .= '<a href = "/'.$lang_code.'/project/'.$seopath.'/">';
                   }
 
                 }
