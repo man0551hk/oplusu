@@ -27,7 +27,7 @@ else if($currLang_id == 5)
       zoom: 16,
       center: myLatLng
     });
-    var contentString = '<b>BC & D Internation Limited</b><br/><?php echo $contact[0];?>';
+    var contentString = '<b>O + U</b><br/><?php echo $contact[0];?>';
 
     var infowindow = new google.maps.InfoWindow({
        content: contentString
@@ -81,7 +81,7 @@ else if($currLang_id == 5)
           </div>
           <div class="col-md-3">
               <div class="phone wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".9s">
-                  <!-- <i class="ion-ios-people-outline"></i> -->
+                <i class="ion-ios-people-outline"></i>
                   <img src = "http://www.oplusu.net//images/tomatojoiner.jpeg" />
                   <br/><br/>
                   <p><?php echo $contact[3];?><br>&nbsp;<br>&nbsp;</p>
