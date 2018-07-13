@@ -146,7 +146,7 @@ ul, ol, li {
     });
 		function SaveOrder(project_photo_id, project_id, dorder)
 		{
-      console.log(project_photo_id, project_id, dorder);
+      //console.log(project_photo_id, project_id, dorder);
 			$.ajax({
 			  url: "gallery_photo_order.php?project_photo_id=" + project_photo_id + "&project_id=" + project_id  + "&dorder=" + dorder
 			})
