@@ -92,7 +92,7 @@ ul, ol, li {
           <input type="file" name="images[]" id="images" multiple >
           <div class="uploading none">
             <label>&nbsp;</label>
-              Each File size < 5MB
+              Each File size < 10MB
               <img src="images/uploading.gif"/>
           </div>
           <br/>

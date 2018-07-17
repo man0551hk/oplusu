@@ -27,9 +27,9 @@ if($_POST['image_form_submit'] == 1)
 
 		if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$target_file))
     {
-			if($filesize > 5242880)
+			if($filesize > 10485760)
 			{
-				$result .= '<font color = "red">Failed: '.$image_name." file size larger than 5MB</font><br/>";
+				$result .= '<font color = "red">Failed: '.$image_name." file size larger than 10MB</font><br/>";
 				unlink($target_file);
 			}
 			else {
