@@ -262,6 +262,7 @@ class GalleryClass
 
   function GetProject($currLang_ID, $langClass)
   {
+    $count = 0;
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
     $result = mysqli_query($link, "select set_id from gallery_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysqli_error());
@@ -279,9 +280,14 @@ class GalleryClass
 
       while($row2 = mysqli_fetch_array($result2))
       {
+        $count++;
+        if ($count == 1 || $count % 4 == 1)
+        {
+          $resultRow .= '<div class = "row">';
+        }
         $project_id = $row2["project_id"];
         $seopath = $row2["seopath"];
-        $resultRow .= '<div class="col-sm-3 col-xs-12 isotopeSelector '.$set_id.'">';
+        $resultRow .= '<div class="col-sm-3 col-md-3 col-xs-12 isotopeSelector '.$set_id.'">';
             $resultRow .= '<article class="">';
                 $resultRow .= '<figure>';
                     $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysqli_error());
@@ -351,14 +357,29 @@ class GalleryClass
                   }
                   else
                   {
-                    $thisTitle = $thisTitle.'<br/>　';
+                    //Wuhan China Resources Land Central 
+                    //Shenzhen Baishizhou City Renovate Office
+                
+                    if (strlen($thisTitle) < 34 && $currLang_ID == 1)
+                    {
+                      $thisTitle = $thisTitle.'<br/><br/>';
+
+                    }
+                    else 
+                    {
+                      $thisTitle = $thisTitle.'<br/>';
+                    }
                   }
                   $resultRow .= $thisTitle;
                 $resultRow .= '</a></div>';
 
             $resultRow .= '</article>';
         $resultRow .= '</div>';
-
+        if ($count % 4 == 0)
+        {
+          $resultRow .= '</div><div class="clearfix"></div>';
+        }
+        
       }
     }
     return $resultRow;

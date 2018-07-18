@@ -48,12 +48,13 @@ include("interface1.php");
 
 <section class="portfolio-section port-col">
     <div class="container-fluid">
-        <div class="row">
+        
             <div class="isotopeContainer wow fadeInUp animated" data-wow-duration="100ms" data-wow-delay="0.3s">
 
                 <?php echo $galleryClass->GetProject($currLang_id, $langClass);?>
+    
             </div>
-        </div>
+       
     </div>
 </section>
 <?php
