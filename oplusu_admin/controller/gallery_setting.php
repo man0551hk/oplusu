@@ -265,7 +265,7 @@ class GalleryClass
     $count = 0;
     $link = $this->Connection->ConnectDB();
     $resultRow = '';
-    $result = mysqli_query($link, "select set_id from gallery_category_setting where lang_id = '$currLang_ID' order by category_id") or die (mysqli_error());
+    $result = mysqli_query($link, "select set_id from gallery_category_setting where lang_id = '$currLang_ID' order by category_id desc") or die (mysqli_error());
     while($row = mysqli_fetch_array($result))
     {
       $set_id = $row["set_id"];

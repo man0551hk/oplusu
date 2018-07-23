@@ -5,7 +5,7 @@ $contact = $ContactInfoClass->GetContact($currLang_id);
 $thislang = 'EN';
 if($currLang_id == 1)
 {
-  $thislang = 'EN';
+  $thislang = 'en';
 }
 else if($currLang_id == 2)
 {
@@ -19,6 +19,14 @@ else if($currLang_id == 4)
 {}
 else if($currLang_id == 5)
 {}
+
+$address = $contact[0];
+if ($currLang_id == 1)
+{
+    $address = str_replace("<font style ='font-size:14px;'>", "", $address);
+    $address = str_replace("</font>", "", $address);
+    
+}
 ?>
 <script>
   function initMap() {
@@ -27,7 +35,7 @@ else if($currLang_id == 5)
       zoom: 16,
       center: myLatLng
     });
-    var contentString = '<b>O + U</b><br/><?php echo $contact[0];?>';
+    var contentString = '<b>O + U</b><br/><?php echo $address;?>';
 
     var infowindow = new google.maps.InfoWindow({
        content: contentString
@@ -53,8 +61,20 @@ else if($currLang_id == 5)
                <div class="map-area">
                   <div class="map wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".1s">
                       <div id = "map" width="100%" height="400" style="width:100%;height:400px;"></div>
-
-                      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuXRgE86melyFGPQZ_OGoIf9javhhQMg4&callback=initMap&language=<?php echo $thislang;?>" async defer></script>
+                        <?php 
+                            if ($currLang_id != 1)
+                            {
+                                ?>
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuXRgE86melyFGPQZ_OGoIf9javhhQMg4&callback=initMap&language=<?php echo $thislang;?>" async defer></script>
+                                <?php
+                            }
+                            else {
+                                ?>
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuXRgE86melyFGPQZ_OGoIf9javhhQMg4&callback=initMap" async defer></script>
+                                <?php
+                            }
+                        ?>
+                      
 
                   </div>
               </div>
@@ -82,9 +102,8 @@ else if($currLang_id == 5)
           <div class="col-md-3">
               <div class="phone wow fadeInUp" data-wow-duration="500ms" data-wow-delay=".9s">
                 <i class="ion-ios-people-outline"></i>
-                  <img src = "http://www.oplusu.net//images/tomatojoiner.jpeg" />
-                  <br/><br/>
-                  <p><?php echo $contact[3];?><br>&nbsp;<br>&nbsp;</p>
+                  <p><a href = "http://www.tomatojoiner.com/" target = "_blank"><img src = "http://www.oplusu.net/images/tomatojoiner.jpeg" /></a>
+                  <br/><br/></p>
               </div>
           </div>
       </div>
