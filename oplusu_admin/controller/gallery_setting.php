@@ -287,7 +287,7 @@ class GalleryClass
         }
         $project_id = $row2["project_id"];
         $seopath = $row2["seopath"];
-        $resultRow .= '<div class="col-sm-3 col-md-3 col-xs-12 isotopeSelector '.$set_id.'">';
+        $resultRow .= '<div class="col-sm-3 col-md-3 col-xs-12 isotopeSelector '.$set_id.'" style = "min-height:430px;">';
             $resultRow .= '<article class="">';
                 $resultRow .= '<figure>';
                     $resultFirstPhoto = mysqli_query($link, "select photo_path from project_photo where project_id = '$project_id' order by dorder limit 1")  or die (mysqli_error());
@@ -346,6 +346,8 @@ class GalleryClass
 
                 //'<a href="project_detail.php?project_id='.$project_id.'">';
                   $thisTitle = mysqli_fetch_object($resultTitle)->project_title;
+                  $line1 = "";
+
                   if(strripos($thisTitle, ",") > 0)
                   {
                     $subject = $thisTitle;
@@ -360,15 +362,15 @@ class GalleryClass
                     //Wuhan China Resources Land Central 
                     //Shenzhen Baishizhou City Renovate Office
                 
-                    if (strlen($thisTitle) < 34 && $currLang_ID == 1)
-                    {
-                      $thisTitle = $thisTitle.'<br/><br/>';
+                    // if (strlen($thisTitle) < 34 && $currLang_ID == 1)
+                    // {
+                    //   $thisTitle = $thisTitle.'<br/><br/>';
 
-                    }
-                    else 
-                    {
+                    // }
+                    // else 
+                    // {
                       $thisTitle = $thisTitle.'<br/>';
-                    }
+                    //}
                   }
                   $resultRow .= $thisTitle;
                 $resultRow .= '</a></div>';

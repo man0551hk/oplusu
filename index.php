@@ -89,7 +89,7 @@ $langCode = $langClass->GetLangCode($currLang_id);
                     else 
                     {
                         ?>
-                            <a href = '/project/' >O</a> + <a href = '/vendor/'>U</a>
+                            <a href = '/project/' >O</a> + <a href = '/project/'>U</a>
                         <?php
                     }
                 ?>
